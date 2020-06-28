@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.User;
+import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,6 +47,8 @@ public class LoginController implements Initializable {
     private Label showOutDir;
     @FXML
     private Button btnExtract;
+    @FXML
+    private Button btnBack;
 
     private String filepath = new String();
     private String watermark = new String();
@@ -53,6 +56,8 @@ public class LoginController implements Initializable {
     private String savename = new String();
     //docx存放解压后文件夹的暂存路径
     private static String desDir = "D://UnzipDocx";
+
+
 
 
     @Override
@@ -135,7 +140,13 @@ public class LoginController implements Initializable {
         showOutDir.setText(outDir);
     }
 
+    @FXML
+    public void backward(ActionEvent actionEvent) {
+        //launch(MainController.class, LoginFXML.class, null);
+        AbstractJavaFxApplicationSupport.showView(WelcomeFXML.class);
+    }
 
+    @FXML
     public void reset(ActionEvent actionEvent) {
         englishResult.setText("* 空白 *");
         chineseResult.setText("* 空白 *");

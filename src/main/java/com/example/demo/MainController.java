@@ -16,7 +16,7 @@ public class MainController extends AbstractJavaFxApplicationSupport {
 
     public static void main(String[] args) {
         //SpringApplication.run(DemoApplication.class, args);
-        launch(MainController.class, LoginFXML.class, args);
+        launch(MainController.class, WelcomeFXML.class, args);
     }
 
     @Override

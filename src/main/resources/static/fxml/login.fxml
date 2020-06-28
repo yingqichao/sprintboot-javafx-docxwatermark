@@ -66,7 +66,7 @@
       <Button layoutX="60.0" layoutY="525.0" mnemonicParsing="false" text="使用说明" />
       <Button layoutX="148.0" layoutY="525.0" mnemonicParsing="false" text="查看日志" />
       <Button layoutX="643.0" layoutY="525.0" mnemonicParsing="false" text="关于我们" />
-      <Button layoutX="723.0" layoutY="525.0" mnemonicParsing="false" text="退出系统" />
+      <Button fx:id="btnBack" onAction="#backward" layoutX="723.0" layoutY="525.0" mnemonicParsing="false" text="退出系统" />
       <Button fx:id="btnReset" layoutX="234.0" layoutY="525.0" mnemonicParsing="false" onAction="#reset" text="重置" />
       <Label layoutX="102.0" layoutY="317.0" text="输出路径：">
          <font>

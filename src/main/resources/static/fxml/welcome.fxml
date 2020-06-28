@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.WelcomeController">
+    <children>
+      <Label layoutX="195.0" layoutY="160.0" text="DocxMark 文档水印确权系统">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="logo" fitHeight="104.0" fitWidth="116.0" layoutX="42.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="707.0" layoutY="17.0" mnemonicParsing="false" text="登录" />
+      <Button layoutX="755.0" layoutY="17.0" mnemonicParsing="false" text="退出" />
+      <Label layoutX="607.0" layoutY="21.0" text="Admin，请登录" />
+      <Button layoutX="60.0" layoutY="525.0" mnemonicParsing="false" text="使用说明" />
+      <Button layoutX="148.0" layoutY="525.0" mnemonicParsing="false" text="查看日志" />
+      <Button layoutX="643.0" layoutY="525.0" mnemonicParsing="false" text="关于我们" />
+      <Button layoutX="723.0" layoutY="525.0" mnemonicParsing="false" text="退出系统" />
+      <Button fx:id="toWord" layoutX="285.0" layoutY="351.0" mnemonicParsing="false" onAction="#gotoWord" text="DocxMark 文档水印确权系统">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="toPDF" layoutX="285.0" layoutY="294.0" mnemonicParsing="false" onAction="#gotoPDF" prefHeight="34.0" prefWidth="233.0" text="PDF水印确权系统">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+
+    </children>
+</AnchorPane>
