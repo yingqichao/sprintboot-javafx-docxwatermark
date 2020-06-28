@@ -17,7 +17,7 @@ public class App
             Dom4jHelper.Embed( docxFileName, desDir,water,outPathFile);
 
             //Extract
-            List<String> extracted = Dom4jHelper.Extract( outPathFile, desDir,null,outPathFile);
+            List<String> extracted = Dom4jHelper.Extract( outPathFile, desDir,null);
             System.out.println("英文提取结果： "+extracted.get(0));
             System.out.println("中文提取结果： "+extracted.get(1));
         } catch (Exception e) {

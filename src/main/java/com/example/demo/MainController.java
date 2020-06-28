@@ -10,18 +10,19 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * maven构建JavaFX+SpringBoot项目启动类
  */
-@ComponentScan({"com.dome.view","com.dome.controller","com.dome.service"})
+@ComponentScan({"com.example.demo"})
 @SpringBootApplication
 public class MainController extends AbstractJavaFxApplicationSupport {
 
     public static void main(String[] args) {
+        //SpringApplication.run(DemoApplication.class, args);
         launch(MainController.class, LoginFXML.class, args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         super.start(stage);
-        stage.setTitle("用户登录");
+        stage.setTitle("DocxMark文档水印溯源系统");
         //窗口最大化显示
 //        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 //        stage.setX(primaryScreenBounds.getMinX());

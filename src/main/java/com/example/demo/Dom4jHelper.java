@@ -98,7 +98,7 @@ public class Dom4jHelper {
     }
 
 
-    public static List<String> Extract(String docxFileName,String desDir,List<String> newKeys,String outPathFile) throws Exception {
+    public static List<String> Extract(String docxFileName,String desDir,List<String> newKeys) throws Exception {
         //GBK与中文互转的例子
 //        System.out
 //                .println(URLDecoder.decode("%D6%D0%CE%C4%B9%FA%BC%CA", "GBK"));// GBK编码转中文
