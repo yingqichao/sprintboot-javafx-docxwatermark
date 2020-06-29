@@ -1,7 +1,7 @@
-package com.example.demo;
+package com.example.demo.Controller;
 
 
-import com.example.demo.LoginFXML;
+import com.example.demo.entity.WelcomeFXML;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

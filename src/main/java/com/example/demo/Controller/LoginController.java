@@ -1,6 +1,7 @@
-package com.example.demo;
+package com.example.demo.Controller;
 
-import com.example.demo.User;
+import com.example.demo.Dom4jHelper;
+import com.example.demo.entity.WelcomeFXML;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;

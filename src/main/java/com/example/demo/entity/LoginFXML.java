@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.entity;
 
 import de.felixroske.jfxsupport.AbstractFxmlView;
 import de.felixroske.jfxsupport.FXMLView;
