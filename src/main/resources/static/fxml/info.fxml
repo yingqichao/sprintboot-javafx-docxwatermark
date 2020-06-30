@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.WelcomeController">
+    <children>
+      <Label layoutX="38.0" layoutY="35.0" text="关于我们">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="23.0" layoutY="77.0" prefHeight="144.0" prefWidth="463.0" text="开发团队： 复旦大学 钱振兴教授团队 北京交通大学 李晓龙教授团队" />
+      <Label layoutX="20.0" layoutY="130.0" prefHeight="96.0" prefWidth="469.0" text="工具一览： Docx/PDF 鲁棒水印" />
+      <Label layoutX="20.0" layoutY="199.0" prefHeight="42.0" prefWidth="420.0" text="UI界面开发： 复旦大学 应祺超" />
+      <Label layoutX="20.0" layoutY="226.0" prefHeight="55.0" prefWidth="453.0" text="开发版本：v1.0 " />
+      <Label layoutX="20.0" layoutY="274.0" prefHeight="32.0" prefWidth="453.0" text="开发时间： 2020/6/25           最后修改时间： 2020/6/30" />
+
+    </children>
+</AnchorPane>
