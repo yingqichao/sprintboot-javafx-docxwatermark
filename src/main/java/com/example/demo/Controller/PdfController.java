@@ -67,6 +67,7 @@ public class PdfController implements Initializable {
         Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
 
         logo.setImage(image);
+        System.out.println("- PdfController initialized -");
     }
 
     @FXML

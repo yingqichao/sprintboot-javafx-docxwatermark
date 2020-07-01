@@ -2,6 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.entity.LoginFXML;
 import com.example.demo.entity.PdfFXML;
+import com.example.demo.test.DialogBuilder;
+import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
@@ -22,17 +24,20 @@ import java.util.ResourceBundle;
 public class WelcomeController extends AbstractJavaFxApplicationSupport implements Initializable {
 
     @FXML
-    private Button toPDF;
+    private JFXButton toPDF;
     @FXML
-    private Button toWord;
+    private JFXButton toWord;
+    @FXML
+    private Button login;
     @FXML
     private ImageView logo;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
-//
 //        logo.setImage(image);
+
+        System.out.println("- WelcomeController initialized -");
     }
 
     @FXML
@@ -44,6 +49,25 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
     public void gotoWord(ActionEvent actionEvent) {
         //launch(MainController.class, LoginFXML.class, null);
         AbstractJavaFxApplicationSupport.showView(LoginFXML.class);
+    }
+
+    @FXML
+    public void usingjfoneix(ActionEvent actionEvent) {
+        //launch(MainController.class, LoginFXML.class, null);
+        //AbstractJavaFxApplicationSupport.showView(usingjfoneixFXML.class);
+        new DialogBuilder(login).setNegativeBtn("取消", new DialogBuilder.OnClickListener() {
+            @Override
+            public void onClick() {
+                //点击取消按钮之后执行的动作
+                System.out.println("用户点击了取消");
+            }
+        }).setPositiveBtn("确定", new DialogBuilder.OnClickListener() {
+            @Override
+            public void onClick() {
+                //点击确定按钮之后执行的动作
+                System.out.println("用户点击了确定");
+            }
+        }).setTitle("提示").setMessage("hello world").create();
     }
 
     @FXML

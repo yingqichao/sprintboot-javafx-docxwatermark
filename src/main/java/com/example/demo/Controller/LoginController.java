@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Dom4jHelper;
 import com.example.demo.entity.WelcomeFXML;
+import com.jfoenix.controls.JFXTextField;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
@@ -25,9 +26,9 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     @FXML
-    private TextField waterText;
+    private JFXTextField waterText;
     @FXML
-    private TextField outFileName;
+    private JFXTextField outFileName;
     @FXML
     private Button btnReset;
     @FXML
@@ -66,6 +67,7 @@ public class LoginController implements Initializable {
         Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
 
         logo.setImage(image);
+        System.out.println("- DocxController initialized -");
     }
 
     @FXML
