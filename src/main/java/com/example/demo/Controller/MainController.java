@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 
+import com.example.demo.entity.LoginFXML;
 import com.example.demo.entity.WelcomeFXML;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import javafx.stage.Stage;
@@ -16,7 +17,7 @@ public class MainController extends AbstractJavaFxApplicationSupport {
 
     public static void main(String[] args) {
         //SpringApplication.run(DemoApplication.class, args);
-        launch(MainController.class, WelcomeFXML.class, args);
+        launch(MainController.class, LoginFXML.class, args);
     }
 
     @Override

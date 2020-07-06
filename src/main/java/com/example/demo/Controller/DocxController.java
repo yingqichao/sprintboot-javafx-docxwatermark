@@ -1,18 +1,17 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Dom4jHelper;
 import com.example.demo.entity.WelcomeFXML;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-
 import javafx.scene.image.Image;
+
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -20,11 +19,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 @FXMLController
-public class LoginController extends AbstractJavaFxApplicationSupport implements Initializable {
+public class DocxController extends AbstractJavaFxApplicationSupport implements Initializable {
 
     @FXML
     private TextField waterText;
@@ -51,11 +51,9 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     private Label showOutDir;
     @FXML
-    private Button btnExtract;
+    private JFXButton btnExtract;
     @FXML
-    private Button btnBack;
-    @FXML
-    private ImageView welcomeLogo;
+    private JFXButton btnBack;
 
     private String filepath = new String();
     private String watermark = new String();
@@ -73,48 +71,60 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
         //function1.setImage(image);function2.setImage(image);
         System.out.println("- DocxController initialized -");
-//        try {
-//            Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/welcome.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
-//            Scene scene = new Scene(target); //创建场景；
-//            Stage stg = new Stage();//创建舞台；
-//            stg.setScene(scene); //将场景载入舞台；
-//            stg.show(); //显示窗口；
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-        Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\logo.jpg");
-        welcomeLogo.setImage(image);
     }
 
     @FXML
-    public void docxEmbed(ActionEvent actionEvent) {
-        System.out.println("-- Go to Docx Watermark --");
+    public void startEmbed(ActionEvent actionEvent) {
+        watermark = waterText.getText();
+        savename = outFileName.getText();
+        System.out.println("水印内容： "+watermark);
+        System.out.println("文件保存名： "+savename);
+        if(filepath.length()==0){
+            f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
+            return;
+        }
+        if(watermark.length()==0) {
+            f_alert_informationDialog("请输入水印内容！","单击确定以返回");
+            return;
+        }else if(watermark.length()>16){
+            f_alert_informationDialog("水印长度超出限定长度（16个汉字）","单击确定以返回");
+            return;
+        }
+        if(outDir.length()==0 || savename.length()==0){
+            f_alert_informationDialog("请输入保存文件的路径/名称！","单击确定以返回");
+            return;
+        }
 
+        String outPathFile = outDir+"\\"+savename+".docx";
+        //嵌入主逻辑
+        try {
+            Dom4jHelper.Embed(filepath, desDir, watermark, outPathFile);
+            f_alert_informationDialog("嵌入已完成！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
-    public void showInfo(ActionEvent actionEvent) throws Exception{
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/info.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
-        Scene scene = new Scene(target); //创建场景；
-        Stage stg = new Stage();//创建舞台；
-        stg.setScene(scene); //将场景载入舞台；
-        stg.show(); //显示窗口；
+    public void startExtract(ActionEvent actionEvent) {
+        if(filepath.length()==0){
+            f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
+            return;
+        }
+        //提取主逻辑
+        try {
+            List<String> extracted = Dom4jHelper.Extract(filepath, desDir, null);
+            String english = extracted.get(0);String chinese = extracted.get(1);
+            englishResult.setText(english);
+            chineseResult.setText(chinese);
+            System.out.println("英文提取结果： " + english);
+            System.out.println("中文提取结果： " + chinese);
+            f_alert_informationDialog("提取已完成！","英文提取结果： " + english+" ，中文提取结果： " + chinese);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
-    @FXML
-    public void pdfEmbed(ActionEvent actionEvent) throws Exception {
-        System.out.println("-- Go to Pdf Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docx.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
-        Scene scene = new Scene(target); //创建场景；
-        Stage stg = new Stage();//创建舞台；
-        stg.setScene(scene); //将场景载入舞台；
-        stg.show(); //显示窗口；
-        //this.getStage().close();
-    }
-
-
 
     @FXML
     public void selectFile(ActionEvent actionEvent) {
@@ -173,11 +183,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     public String chooseFolder() {
         try {
-        Stage fileStage = null;
-        DirectoryChooser folderChooser = new DirectoryChooser();
-        folderChooser.setTitle("Choose Folder");
-        File selectedFile = folderChooser.showDialog(fileStage);
-        return selectedFile.getPath();
+            Stage fileStage = null;
+            DirectoryChooser folderChooser = new DirectoryChooser();
+            folderChooser.setTitle("Choose Folder");
+            File selectedFile = folderChooser.showDialog(fileStage);
+            return selectedFile.getPath();
         }catch(Exception e){
             System.out.println("未选择文件夹");
             return null;

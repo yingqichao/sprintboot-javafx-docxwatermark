@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 @FXMLController
 public class WelcomeController extends AbstractJavaFxApplicationSupport implements Initializable {
 
+    private boolean initialized = false;
+
     @FXML
     private JFXButton toPDF;
     @FXML
@@ -30,14 +32,29 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
     @FXML
     private Button login;
     @FXML
-    private ImageView logo;
+    private ImageView welcomeLogo;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
-//        logo.setImage(image);
 
-        System.out.println("- WelcomeController initialized -");
+        if(!initialized) {
+            Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\logo.jpg");
+            welcomeLogo.setImage(image);
+
+            System.out.println("- WelcomeController initialized -");
+//            try {
+//                //Thread.sleep(2000);
+//                Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/complexCmd.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+//                Scene scene = new Scene(target); //创建场景；
+//                Stage stg = new Stage();//创建舞台；
+//                stg.setScene(scene); //将场景载入舞台；
+//                stg.show(); //显示窗口；
+//                this.getStage().close();
+//                System.out.println("- WelcomeController Closed -");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+        }
     }
 
     @FXML
@@ -46,9 +63,17 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
     }
 
     @FXML
-    public void gotoWord(ActionEvent actionEvent) {
+    public void gotoWord(ActionEvent actionEvent) throws Exception{
         //launch(MainController.class, LoginFXML.class, null);
-        AbstractJavaFxApplicationSupport.showView(LoginFXML.class);
+        //AbstractJavaFxApplicationSupport.showView(LoginFXML.class);
+
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/complexCmd.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        this.getStage().close();
+        System.out.println("- WelcomeController Closed -");
     }
 
     @FXML
@@ -68,15 +93,6 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
                 System.out.println("用户点击了确定");
             }
         }).setTitle("提示").setMessage("hello world").create();
-    }
-
-    @FXML
-    public void showInfo(ActionEvent actionEvent) throws Exception{
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/info.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
-        Scene scene = new Scene(target); //创建场景；
-        Stage stg = new Stage();//创建舞台；
-        stg.setScene(scene); //将场景载入舞台；
-        stg.show(); //显示窗口；
     }
 
 }
