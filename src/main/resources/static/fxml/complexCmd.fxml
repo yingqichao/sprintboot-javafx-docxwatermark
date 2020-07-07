@@ -65,8 +65,10 @@
         <AnchorPane maxWidth="75.0" minWidth="75.0">
           <children>
 <!--            Left-->
-            <JFXButton layoutY="5.0" fx:id="btnEmbed" prefHeight="50.0" prefWidth="50.0"
-                       text="嵌入信息" textFill="WHITE" onAction="#docxEmbed">
+            <Label layoutX="15.0" layoutY="5.0"  text="-- PDF --" />
+
+            <JFXButton layoutY="25.0" fx:id="pdfEmbed" prefHeight="50.0" prefWidth="50.0"
+                       text="嵌入信息" textFill="WHITE" onAction="#pdfEmbed">
               <font>
                 <Font name="System Bold" size="20.0" />
               </font>
@@ -79,8 +81,8 @@
               </graphic>
             </JFXButton>
 
-            <JFXButton layoutY="60.0" fx:id="btnExtract" prefHeight="50.0" prefWidth="50.0"
-                       text="嵌入信息" textFill="WHITE" onAction="#pdfEmbed">
+            <JFXButton layoutY="80.0" fx:id="pdfExtract" prefHeight="50.0" prefWidth="50.0"
+                       text="嵌入信息" textFill="WHITE" onAction="#pdfExtract">
               <font>
                 <Font name="System Bold" size="20.0" />
               </font>
@@ -93,6 +95,35 @@
               </graphic>
             </JFXButton>
 
+            <Label layoutX="12.0" layoutY="180.0"  text="-- Word --" />
+            <JFXButton layoutY="205.0" fx:id="docxEmbed" prefHeight="50.0" prefWidth="50.0"
+                       text="嵌入信息" textFill="WHITE" onAction="#docxEmbed">
+              <font>
+                <Font name="System Bold" size="20.0" />
+              </font>
+              <graphic>
+                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="/static/logo/docxEmbed.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+            </JFXButton>
+
+            <JFXButton layoutY="260.0" fx:id="docxExtract" prefHeight="50.0" prefWidth="50.0"
+                       text="嵌入信息" textFill="WHITE" onAction="#docxExtract">
+              <font>
+                <Font name="System Bold" size="20.0" />
+              </font>
+              <graphic>
+                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="/static/logo/docxExtract.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+            </JFXButton>
+
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -100,13 +131,29 @@
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
 <!--                Center-->
-                <ImageView fx:id="welcomeLogo" layoutX="100" layoutY="25" fitHeight="500.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
 
+                  <JFXButton layoutX="100" layoutY="10" fx:id="btnRelatedFile" prefHeight="50.0" onAction="#openRelatedFile">
+                      <font>
+                          <Font name="System Bold" size="20.0" />
+                      </font>
+                      <graphic>
+                          <ImageView fx:id="welcomeLogo" fitHeight="500.0" fitWidth="450.0"  pickOnBounds="true" preserveRatio="true" />
+
+                      </graphic>
+                  </JFXButton>
+
+
+<!--                <ImageView fx:id="welcomeLogo" layoutX="100" layoutY="10" fitHeight="500.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />-->
+                <Label fx:id="filename" layoutX="280.0" layoutY="525.0"  text="* 点击左侧按钮以执行操作 *">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+                </Label>
               </children>
             </AnchorPane>
           </content>
         </ScrollPane>
-        <AnchorPane  maxWidth="200.0" minWidth="200.0">
+        <AnchorPane  maxWidth="100.0" minWidth="100.0">
           <children>
 <!--              Right  -->
 

@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.entity.AppModel;
 import com.example.demo.entity.WelcomeFXML;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
@@ -19,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,9 +42,6 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 //    private Button btnEmbed;
 
     @FXML
-    private JFXButton btnEmbed;
-
-    @FXML
     private Label englishResult;
     @FXML
     private Label chineseResult;
@@ -51,11 +50,21 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     private Label showOutDir;
     @FXML
-    private Button btnExtract;
+    private JFXButton pdfEmbed;
+    @FXML
+    private JFXButton btnRelatedFile;
+    @FXML
+    private Button pdfExtract;
+    @FXML
+    private JFXButton docxEmbed;
+    @FXML
+    private Button docxExtract;
     @FXML
     private Button btnBack;
     @FXML
     private ImageView welcomeLogo;
+    @FXML
+    private Label filename;
 
     private String filepath = new String();
     private String watermark = new String();
@@ -64,15 +73,27 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     //docx存放解压后文件夹的暂存路径
     private static String desDir = "D://UnzipDocx";
 
-
+    // 必须static 类型
+    public  static AppModel model = new AppModel();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
+//        Class<?> clazz = this.getClass();
+//        InputStream input = clazz.getResourceAsStream("/com/xntutor/javafx/icon/java-32.png");
+        Image logoImage = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\logo.jpg");
+        Image wordImage = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\wordImage.png");
+        Image pdfImage = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\pdfImage.png");
 
         //function1.setImage(image);function2.setImage(image);
-        System.out.println("- DocxController initialized -");
+        model.textProperty().addListener((obs, oldText, newText) -> filename.setText(newText));
+        model.isWordProperty().addListener((obs, oldbool, isWord) -> {
+            if (isWord)
+                welcomeLogo.setImage(wordImage);
+            else
+                welcomeLogo.setImage(pdfImage);
+        });
+        System.out.println("- LoginController initialized - Got Text:"+filename.getText());
 //        try {
 //            Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/welcome.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
 //            Scene scene = new Scene(target); //创建场景；
@@ -83,14 +104,40 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 //            e.printStackTrace();
 //        }
 
-        Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\logo.jpg");
-        welcomeLogo.setImage(image);
+        welcomeLogo.setImage(logoImage);
     }
 
     @FXML
-    public void docxEmbed(ActionEvent actionEvent) {
-        System.out.println("-- Go to Docx Watermark --");
+    public void openRelatedFile(ActionEvent actionEvent) throws Exception{
+        try {
+            getHostServices().showDocument(filename.getText());
+        }catch (Exception e){
+            System.out.println("打开文件操作无效，文件名："+filename.getText());
+        }
 
+    }
+
+    @FXML
+    public void docxEmbed(ActionEvent actionEvent) throws Exception{
+        System.out.println("-- Go to Docx Watermark --");
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docx.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("DocxMark文档水印溯源系统");
+
+    }
+
+    @FXML
+    public void docxExtract(ActionEvent actionEvent) throws Exception{
+        System.out.println("-- Go to Docx Watermark --");
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docxExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("DocxMark文档水印溯源系统");
 
     }
 
@@ -106,11 +153,24 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void pdfEmbed(ActionEvent actionEvent) throws Exception {
         System.out.println("-- Go to Pdf Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docx.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdf.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
         stg.show(); //显示窗口；
+        stg.setTitle("PdfMark文档水印溯源系统");
+        //this.getStage().close();
+    }
+
+    @FXML
+    public void pdfExtract(ActionEvent actionEvent) throws Exception {
+        System.out.println("-- Go to Pdf Watermark --");
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdf.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("PdfMark文档水印溯源系统");
         //this.getStage().close();
     }
 

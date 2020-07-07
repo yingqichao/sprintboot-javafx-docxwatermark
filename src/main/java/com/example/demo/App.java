@@ -6,10 +6,10 @@ public class App
 {
     public static void main( String[] args )
     {
-        String docxFileName = "D://Hello Word.docx";
-        String desDir = "D://UnzipDocx";
-        String outPathFile = "D://watermarked.docx";
-        String water = "测试test";
+        String docxFileName = "F://1.docx";
+        String desDir = "F://UnzipDocx";
+        String outPathFile = "F://watermarked.docx";
+        String water = "qichao";
         try {
             //Embed
 //            List<String> newKeys = new LinkedList<>();

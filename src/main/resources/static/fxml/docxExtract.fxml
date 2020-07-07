@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!--<?com.jfoenix.controls.JFXTextField?>-->
+<!--<?import com.jfoenix.controls.JFXButton?>-->
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.DocxController">
+    <children>
+      <Label layoutX="50.0" layoutY="36.0" text="DocxMark 信息提取">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="60.0" layoutY="93.0" text="文件选择：">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="showFile" layoutX="158.0" layoutY="93.0" prefHeight="22.0" prefWidth="448.0" text="* 未选择文件 *">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSelectFile" layoutX="366.0" layoutY="328.0" mnemonicParsing="false" onAction="#selectFile" text="选择文件">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <ImageView fx:id="logo" fitHeight="104.0" fitWidth="116.0" layoutX="42.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="60.0" layoutY="179.0" text="提取得到的信息：">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="englishResult" layoutX="234.0" layoutY="219.0" prefHeight="22.0" prefWidth="349.0" text="* 空白 *">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+        <Label fx:id="chineseResult" layoutX="234.0" layoutY="267.0" prefHeight="22.0" prefWidth="349.0" text="* 空白 *">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+
+      <Button fx:id="btnExtract" layoutX="487.0" layoutY="328.0" mnemonicParsing="false" onAction="#startExtract" text="开始提取">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+
+      <Button layoutX="366.0" layoutY="33.0" mnemonicParsing="false" text="使用说明">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <Button layoutX="50.0" layoutY="328.0" mnemonicParsing="false" text="查看日志">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+<!--      <Button layoutX="643.0" layoutY="525.0" mnemonicParsing="false" text="关于我们" />-->
+<!--      <Button fx:id="btnBack" layoutX="723.0" layoutY="525.0" mnemonicParsing="false" onAction="#backward" text="退出系统" />-->
+      <Button fx:id="btnReset" layoutX="519.0" layoutY="33.0" mnemonicParsing="false" onAction="#reset" text="重置">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+
+<!--      <Label layoutX="102.0" layoutY="317.0" text="输出路径：">-->
+<!--         <font>-->
+<!--            <Font size="16.0" />-->
+<!--         </font>-->
+<!--      </Label>-->
+<!--      <Label fx:id="showOutDir" layoutX="225.0" layoutY="317.0" prefHeight="22.0" prefWidth="195.0" text="* 未选择 *">-->
+<!--         <font>-->
+<!--            <Font size="16.0" />-->
+<!--         </font>-->
+<!--      </Label>-->
+<!--      <Button fx:id="btnSelectOutDir" layoutX="650.0" layoutY="319.0" mnemonicParsing="false" onAction="#selectOutDir" text="选择路径" />-->
+<!--      <Label layoutX="434.0" layoutY="321.0" text="\\" />-->
+<!--      <TextField fx:id="outFileName" layoutX="453.0" layoutY="317.0" prefHeight="23.0" prefWidth="122.0" />-->
+<!--      <Label layoutX="592.0" layoutY="321.0" text=".docx">-->
+<!--         <font>-->
+<!--            <Font size="14.0" />-->
+<!--         </font>-->
+<!--      </Label>-->
+      <Label layoutX="167.0" layoutY="222.0" text="(UTF-8)" />
+      <Label layoutX="172.0" layoutY="270.0" text="(GBK)" />
+
+    </children>
+</AnchorPane>

@@ -150,15 +150,26 @@ public class Dom4jHelper {
 
         //final String A = "00001234";
         //通常只有一个
-        List rsidsList = doc.getRootElement().elements("rsids");
+        List<Element> rsidsList = doc.getRootElement().elements("rsids");
+        Element resIdElement = rsidsList.get(0);
         if(isEmbed) {
+
+            //删除原有的节点
+            //((Element)(resIdElement.elements("rsid").get(0))).attributeValue("val")
+            List<Element> rsidList = resIdElement.elements("rsid");
+            for(Element rsid:rsidList){
+                if(Integer.parseInt(rsid.attributeValue("val").substring(0,4),16)<16)
+                    resIdElement.remove(rsid);
+            }
+
+
             //嵌入
             for (String A : newKeys) {
                 //要添加的节点
                 Element aNode = DocumentHelper.createElement("w:rsid").addAttribute("w:val", A);
 
                 if (rsidsList != null && rsidsList.size() > 0) {
-                    Element resIdElement = (Element) rsidsList.get(0);
+
                     //查找是否有
                     Node node = resIdElement.selectSingleNode("rsid[@w:val='" + A + "']");
                     if (node != null) {
@@ -184,7 +195,7 @@ public class Dom4jHelper {
         }else{
             //提取
             if (rsidsList != null && rsidsList.size() > 0) {
-                Element resIdElement = (Element) rsidsList.get(0);
+                //Element resIdElement = (Element) rsidsList.get(0);
                 //查找是否有
                List elements = resIdElement.elements();
                Iterator iter = elements.iterator();

@@ -8,20 +8,25 @@ import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javafx.scene.Node;
 
 @FXMLController
 public class DocxController extends AbstractJavaFxApplicationSupport implements Initializable {
@@ -40,7 +45,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 //    private Button btnEmbed;
 
     @FXML
-    private JFXButton btnEmbed;
+    private Button btnEmbed;
 
     @FXML
     private Label englishResult;
@@ -51,9 +56,9 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
     @FXML
     private Label showOutDir;
     @FXML
-    private JFXButton btnExtract;
+    private Button btnExtract;
     @FXML
-    private JFXButton btnBack;
+    private Button btnBack;
 
     private String filepath = new String();
     private String watermark = new String();
@@ -99,12 +104,43 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         //嵌入主逻辑
         try {
             Dom4jHelper.Embed(filepath, desDir, watermark, outPathFile);
-            f_alert_informationDialog("嵌入已完成！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+            //f_alert_informationDialog("嵌入已完成！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+            sendText(actionEvent);
+
         }catch (Exception e){
             e.printStackTrace();
+            f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
         }
 
     }
+
+    @FXML
+    private void sendText(ActionEvent actionEvent) throws Exception {
+        // 获取结果界面控制器
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/static/fxml/complexCmd.fxml"));
+        try
+        {
+            VBox login = (VBox) loader.load();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        LoginController control = (LoginController) loader.getController();
+        // 设置结果界面内容
+        control.model.setText(outDir+"\\"+savename+".docx");
+        control.model.setIsWord(true);
+        //关闭窗口
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+    }
+
+//    public void confirm(ActionEvent actionEvent)
+//    {
+//        //改变模板设置控制器的模板名列表属性，触发观察者
+//        String inputContent=textEnter.getText();
+//        ResultController.setText(inputContent);
+//        //关闭窗口
+//        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+//    }
 
     @FXML
     public void startExtract(ActionEvent actionEvent) {
@@ -120,6 +156,8 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             chineseResult.setText(chinese);
             System.out.println("英文提取结果： " + english);
             System.out.println("中文提取结果： " + chinese);
+            //关闭窗口
+            ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
             f_alert_informationDialog("提取已完成！","英文提取结果： " + english+" ，中文提取结果： " + chinese);
         }catch (Exception e){
             e.printStackTrace();
@@ -154,16 +192,16 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
     @FXML
     public void reset(ActionEvent actionEvent) {
-        englishResult.setText("* 空白 *");
-        chineseResult.setText("* 空白 *");
-        waterText.clear();
-        outFileName.clear();
-        filepath = new String();
-        watermark = new String();
-        outDir = new String();
-        savename = new String();
-        showOutDir.setText("* 未选择 *");
-        showFile.setText("* 未选择文件 *");
+        if(englishResult!=null) englishResult.setText("* 空白 *");
+        if(chineseResult!=null) chineseResult.setText("* 空白 *");
+        if(waterText!=null) waterText.clear();
+        if(outFileName!=null) outFileName.clear();
+        if(filepath!=null) filepath = new String();
+        if(watermark!=null) watermark = new String();
+        if(outDir!=null) outDir = new String();
+        if(savename!=null) savename = new String();
+        if(showOutDir!=null) showOutDir.setText("* 未选择 *");
+        if(showFile!=null) showFile.setText("* 未选择文件 *");
     }
 
     public String chooseFile() {
