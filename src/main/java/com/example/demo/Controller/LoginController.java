@@ -165,7 +165,7 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void pdfExtract(ActionEvent actionEvent) throws Exception {
         System.out.println("-- Go to Pdf Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdf.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdfExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
