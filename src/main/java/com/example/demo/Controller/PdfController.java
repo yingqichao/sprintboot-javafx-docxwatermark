@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Dom4jHelper;
-import com.example.demo.PdfParing.PdfWm;
+import com.example.demo.PdfHelper.PdfParsing;
+import com.example.demo.PdfHelper.PdfWm;
 import com.example.demo.entity.WelcomeFXML;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
@@ -11,7 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -19,12 +21,17 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
+
+import javax.imageio.ImageIO;
 
 @FXMLController
 public class PdfController implements Initializable {
@@ -128,11 +135,16 @@ public class PdfController implements Initializable {
         }
         LoginController control = (LoginController) loader.getController();
         // 设置结果界面内容
-        control.model.setText(outDir+"\\"+savename+".pdf");
-        control.model.setIsWord(false);
+        String fileAddress = outDir+"\\"+savename+".pdf";
+        control.model.setText(fileAddress);
+        // 获得摘要
+        String out = PdfParsing.pdf2png(outDir,savename,0,1,"jpg");
+        System.out.println("Screenshot for "+fileAddress+" saves As: "+out);
+        control.model.setIsWord(true);
         //关闭窗口
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
+
 
     @FXML
     public void startExtract(ActionEvent actionEvent) {
@@ -265,5 +277,30 @@ public class PdfController implements Initializable {
         //_alert.initOwner(d_stage);
         _alert.show();
     }
+
+
+    /**
+     * 转换全部的pdf
+     * @param fileAddress 文件地址
+     * @param filename PDF文件名
+     * @param type 图片类型
+     */
+    public static void pdf2png(String fileAddress,String filename,String type) {
+        // 将pdf装图片 并且自定义图片得格式大小
+        File file = new File(fileAddress+"\\"+filename+".pdf");
+        try {
+            PDDocument doc = PDDocument.load(file);
+            PDFRenderer renderer = new PDFRenderer(doc);
+            int pageCount = doc.getNumberOfPages();
+            for (int i = 0; i < pageCount; i++) {
+                BufferedImage image = renderer.renderImageWithDPI(i, 144); // Windows native DPI
+                // BufferedImage srcImage = resize(image, 240, 240);//产生缩略图
+                ImageIO.write(image, type, new File(fileAddress+"\\"+filename+"_"+(i+1)+"."+type));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

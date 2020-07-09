@@ -1,6 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Dom4jHelper;
+import com.example.demo.PdfHelper.PdfParsing;
+import com.example.demo.WordHelper.WordParsing;
 import com.example.demo.entity.WelcomeFXML;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -127,8 +129,15 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         }
         LoginController control = (LoginController) loader.getController();
         // 设置结果界面内容
-        control.model.setText(outDir+"\\"+savename+".docx");
+        String fileAddress = outDir+"\\"+savename+".docx";
+        control.model.setText(fileAddress);
         control.model.setIsWord(true);
+
+        WordParsing.convertDocxToPDF(new File(fileAddress),outDir+"\\"+savename+".pdf");
+        System.out.println("Saving PDF: "+outDir+"\\"+savename+".pdf");
+        // 获得摘要
+        String out = PdfParsing.pdf2png(outDir,savename,0,1,"jpg");
+        System.out.println("Screenshot for "+fileAddress+" saves As: "+out);
         //关闭窗口
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }

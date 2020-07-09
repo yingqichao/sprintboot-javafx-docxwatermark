@@ -88,8 +88,9 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
         //function1.setImage(image);function2.setImage(image);
         model.textProperty().addListener((obs, oldText, newText) -> filename.setText(newText));
         model.isWordProperty().addListener((obs, oldbool, isWord) -> {
+            String name = filename.getText();
             if (isWord)
-                welcomeLogo.setImage(wordImage);
+                welcomeLogo.setImage(new Image("file:"+name.substring(0,name.length()-4)+".jpg"));
             else
                 welcomeLogo.setImage(pdfImage);
         });
