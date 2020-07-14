@@ -140,7 +140,7 @@ public class PdfController implements Initializable {
         // 获得摘要
         String out = PdfParsing.pdf2png(outDir,savename,0,1,"jpg");
         System.out.println("Screenshot for "+fileAddress+" saves As: "+out);
-        control.model.setIsWord(true);
+        control.model.setIsWord(filepath);
         //关闭窗口
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }

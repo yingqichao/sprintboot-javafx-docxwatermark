@@ -47,6 +47,10 @@ public class Dom4jHelper {
             for(char c:water.toCharArray()){
                 temp.append(Integer.toHexString(c));
             }
+            //如果是奇数个符号，则尾部添加空格作为填充
+            if(water.length()%2==1){
+                temp.append(Integer.toHexString(' '));
+            }
 
         }else{
             //观察是否为混合模式,注意，水印中不能有%

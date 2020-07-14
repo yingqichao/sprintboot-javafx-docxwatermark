@@ -1,21 +1,28 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Dom4jHelper;
+import com.example.demo.Excel.Utils.Util;
 import com.example.demo.PdfHelper.PdfParsing;
+import com.example.demo.Setting;
 import com.example.demo.WordHelper.WordParsing;
 import com.example.demo.entity.WelcomeFXML;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -23,6 +30,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +52,8 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
     private Button btnSelectFile;
     @FXML
     private Button btnSelectOutDir;
+    @FXML
+    private Button btnDetail;
 //    @FXML
 //    private Button btnEmbed;
 
@@ -61,6 +72,15 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
     private Button btnExtract;
     @FXML
     private Button btnBack;
+    @FXML
+    private Button btnFromFile;
+
+    @FXML
+    private ImageView wordImage;
+    @FXML
+    private ImageView pdfImage;
+    @FXML
+    private ImageView excelImage;
 
     private String filepath = new String();
     private String watermark = new String();
@@ -69,19 +89,84 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
     //docx存放解压后文件夹的暂存路径
     private static String desDir = "D://UnzipDocx";
 
+    private String cssDefault = "-fx-border-color: black;\n" + "-fx-border-insets: 1;\n"
+            + "-fx-border-width: 1;\n" + "-fx-border-style: dashed;\n";
 
+    private FXMLLoader fxmlLoader = null;
+    private Parent target = null;
+    private ErrController controller = null;
+    private String errorMsg = "";
 
+    @FXML
+    private AnchorPane anchor1;
+    @FXML
+    private AnchorPane anchor2;
+    @FXML
+    private AnchorPane anchor3;
+
+    @FXML
+    private RadioButton wordSelect;
+    @FXML
+    private RadioButton pdfSelect;
+    @FXML
+    private RadioButton excelSelect;
+
+    final ToggleGroup group = new ToggleGroup();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
+        if(anchor1!=null) anchor1.setStyle(cssDefault);
+        if(anchor2!=null) anchor2.setStyle(cssDefault);
+        if(anchor3!=null) anchor3.setStyle(cssDefault);
+        Image excel = new Image(getClass().getResource("/static/logo/excelImage.png").toExternalForm());
+        Image word = new Image(getClass().getResource("/static/logo/wordImage.png").toExternalForm());
+        Image pdf = new Image(getClass().getResource("/static/logo/pdfImage.png").toExternalForm());
+        excelImage.setImage(excel);
+        pdfImage.setImage(pdf);
+        wordImage.setImage(word);
 
-        //function1.setImage(image);function2.setImage(image);
+        wordSelect.setToggleGroup(group);
+        wordSelect.setUserData(Setting.WORD_MODE);
+        pdfSelect.setToggleGroup(group);
+        pdfSelect.setUserData(Setting.PDF_MODE);
+        excelSelect.setToggleGroup(group);
+        excelSelect.setUserData(Setting.EXCEL_MODE);
+
         System.out.println("- DocxController initialized -");
+
+        // 选中某个单选框时输出选中的值
+        group.selectedToggleProperty().addListener(
+                new ChangeListener<Toggle>() {
+                    public void changed(ObservableValue<? extends Toggle> ov,Toggle old_toggle, Toggle new_toggle) {
+                        if (group.getSelectedToggle() != null) {
+                            System.out.println(group.getSelectedToggle().getUserData());
+                        }
+                    }
+                });
+
+
     }
 
     @FXML
-    public void startEmbed(ActionEvent actionEvent) {
+    public void fromFile(ActionEvent actionEvent) throws Exception {
+        try {
+            String select = chooseFile("Text File", "*.txt");
+            System.out.println("文件选择： " + select);
+            //errorMsg = "文件选择： "+select;
+            String wm = Util.readWatermark(select);
+            System.out.println("读取到的水印信息： " + wm);
+            waterText.setText(wm);
+        }catch (Exception e){
+            System.out.println("未选择文件" );
+        }
+    }
+
+    @FXML
+    public void startEmbed(ActionEvent actionEvent) throws Exception {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+
         watermark = waterText.getText();
         savename = outFileName.getText();
         System.out.println("水印内容： "+watermark);
@@ -110,9 +195,42 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             sendText(actionEvent);
 
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+            e.printStackTrace(pw);
+            pw.flush();
+            sw.flush();
+            errorMsg = sw.toString();
+            //打开新的窗口
+            showDetail(null);
+
+        } finally {
+            try {
+                pw.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            try {
+                sw.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
+
+    }
+
+    @FXML
+    private void showDetail(ActionEvent actionEvent) throws Exception{
+        fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/log.fxml"));
+        target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        controller = (ErrController) fxmlLoader.getController();
+        controller.model.setText(errorMsg);
+//        if(target.getScene() != null)
+//            target.getScene().setRoot(null);
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
 
     }
 
@@ -131,13 +249,13 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         // 设置结果界面内容
         String fileAddress = outDir+"\\"+savename+".docx";
         control.model.setText(fileAddress);
-        control.model.setIsWord(true);
+        control.model.setIsWord("Word");//true
 
-        WordParsing.convertDocxToPDF(new File(fileAddress),outDir+"\\"+savename+".pdf");
-        System.out.println("Saving PDF: "+outDir+"\\"+savename+".pdf");
-        // 获得摘要
-        String out = PdfParsing.pdf2png(outDir,savename,0,1,"jpg");
-        System.out.println("Screenshot for "+fileAddress+" saves As: "+out);
+//        WordParsing.convertDocxToPDF(new File(fileAddress),outDir+"\\"+savename+".pdf");
+//        System.out.println("Saving PDF: "+outDir+"\\"+savename+".pdf");
+//        // 获得摘要
+//        String out = PdfParsing.pdf2png(outDir,savename,0,1,"jpg");
+//        System.out.println("Screenshot for "+fileAddress+" saves As: "+out);
         //关闭窗口
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
@@ -175,10 +293,11 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
     @FXML
     public void selectFile(ActionEvent actionEvent) {
-        String select = chooseFile();
+        String select = chooseFile("Microsoft Word File", "*.docx");
         if(select!=null) {
             filepath = select;
             System.out.println("文件选择： "+filepath);
+            errorMsg = "文件选择： "+filepath;
         }
         showFile.setText(filepath);
     }
@@ -189,6 +308,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         if(select!=null) {
             outDir = select;
             System.out.println("输出文件夹选择： "+outDir);
+            errorMsg = "输出文件夹选择： "+outDir;
         }
         showOutDir.setText(outDir);
     }
@@ -213,13 +333,13 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         if(showFile!=null) showFile.setText("* 未选择文件 *");
     }
 
-    public String chooseFile() {
+    public String chooseFile(String description,String extension) {
         try {
             Stage mainStage = null;
             FileChooser fileChooser = new FileChooser();//构建一个文件选择器实例
 
             fileChooser.setTitle("选择文件");
-            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Microsoft Word File", "*.docx"));
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(description,extension));
             File selectedFile = fileChooser.showOpenDialog(mainStage);
             return selectedFile.getPath();
         }catch(Exception e){

@@ -2,7 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.entity.LoginFXML;
 import com.example.demo.entity.PdfFXML;
-import com.example.demo.test.DialogBuilder;
+//import com.example.demo.test.DialogBuilder;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import de.felixroske.jfxsupport.FXMLController;
@@ -38,7 +38,7 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
     public void initialize(URL location, ResourceBundle resources) {
 
         if(!initialized) {
-            Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\logo.jpg");
+            Image image = new Image(getClass().getResource("/static/logo/logo.jpg").toExternalForm());
             welcomeLogo.setImage(image);
 
             System.out.println("- WelcomeController initialized -");
@@ -76,23 +76,23 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
         System.out.println("- WelcomeController Closed -");
     }
 
-    @FXML
-    public void usingjfoneix(ActionEvent actionEvent) {
-        //launch(MainController.class, LoginFXML.class, null);
-        //AbstractJavaFxApplicationSupport.showView(usingjfoneixFXML.class);
-        new DialogBuilder(login).setNegativeBtn("取消", new DialogBuilder.OnClickListener() {
-            @Override
-            public void onClick() {
-                //点击取消按钮之后执行的动作
-                System.out.println("用户点击了取消");
-            }
-        }).setPositiveBtn("确定", new DialogBuilder.OnClickListener() {
-            @Override
-            public void onClick() {
-                //点击确定按钮之后执行的动作
-                System.out.println("用户点击了确定");
-            }
-        }).setTitle("提示").setMessage("hello world").create();
-    }
+//    @FXML
+//    public void usingjfoneix(ActionEvent actionEvent) {
+//        //launch(MainController.class, LoginFXML.class, null);
+//        //AbstractJavaFxApplicationSupport.showView(usingjfoneixFXML.class);
+//        new DialogBuilder(login).setNegativeBtn("取消", new DialogBuilder.OnClickListener() {
+//            @Override
+//            public void onClick() {
+//                //点击取消按钮之后执行的动作
+//                System.out.println("用户点击了取消");
+//            }
+//        }).setPositiveBtn("确定", new DialogBuilder.OnClickListener() {
+//            @Override
+//            public void onClick() {
+//                //点击确定按钮之后执行的动作
+//                System.out.println("用户点击了确定");
+//            }
+//        }).setTitle("提示").setMessage("hello world").create();
+//    }
 
 }

@@ -9,12 +9,12 @@ import javafx.beans.property.StringProperty;
 public class AppModel
 {
     private StringProperty text = new SimpleStringProperty();
-    private BooleanProperty isWord = new SimpleBooleanProperty();
+    private StringProperty isWord = new SimpleStringProperty();
 
     public AppModel()
     {
         this.text = new SimpleStringProperty();
-        this.isWord = new SimpleBooleanProperty();
+        this.isWord = new SimpleStringProperty();
     }
 
     public StringProperty textProperty() {
@@ -29,15 +29,15 @@ public class AppModel
         textProperty().set(text);
     }
 
-    public boolean isIsWord() {
+    public String isIsWord() {
         return isWord.get();
     }
 
-    public BooleanProperty isWordProperty() {
+    public StringProperty isWordProperty() {
         return isWord;
     }
 
-    public void setIsWord(boolean isWord) {
+    public void setIsWord(String isWord) {
         this.isWord.set(isWord);
     }
 }

@@ -17,12 +17,12 @@
          </font>
       </Label>
       <ImageView fx:id="logo" fitHeight="104.0" fitWidth="116.0" layoutX="42.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="login" layoutX="536.0" layoutY="17.0" mnemonicParsing="false" onAction="#usingjfoneix" text="登录" />
+      <Button fx:id="login" layoutX="536.0" layoutY="17.0" mnemonicParsing="false"  text="登录" />
       <Button layoutX="586.0" layoutY="17.0" mnemonicParsing="false" text="退出" />
       <Label layoutX="442.0" layoutY="21.0" text="Admin，请登录" />
       <Button layoutX="28.0" layoutY="353.0" mnemonicParsing="false" text="使用说明" />
       <Button layoutX="114.0" layoutY="353.0" mnemonicParsing="false" text="查看日志" />
-      <Button layoutX="430.0" layoutY="353.0" mnemonicParsing="false" onAction="#showInfo" text="关于我们" />
+      <Button layoutX="430.0" layoutY="353.0" mnemonicParsing="false"  text="关于我们" />
       <Button layoutX="524.0" layoutY="353.0" mnemonicParsing="false" text="退出系统" />
       <JFXButton fx:id="toWord" layoutX="212.0" layoutY="216.0" mnemonicParsing="false" onAction="#gotoWord" text="DocxMark 文档水印确权系统">
          <font>

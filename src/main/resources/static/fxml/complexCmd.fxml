@@ -65,8 +65,8 @@
         <AnchorPane maxWidth="75.0" minWidth="75.0">
           <children>
 <!--            Left-->
-            <Label layoutX="15.0" layoutY="5.0"  text="-- PDF --" />
 
+            <Label layoutX="15.0" layoutY="5.0"  text="-- PDF --" />
             <JFXButton layoutY="25.0" fx:id="pdfEmbed" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#pdfEmbed">
               <font>
@@ -75,12 +75,11 @@
               <graphic>
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="/static/logo/pdfEmbed.png" />
+                    <Image url="/static/logo/newPdfEmbed.png" />
                   </image>
                 </ImageView>
               </graphic>
             </JFXButton>
-
             <JFXButton layoutY="80.0" fx:id="pdfExtract" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#pdfExtract">
               <font>
@@ -89,7 +88,7 @@
               <graphic>
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="/static/logo/pdfExtract.png" />
+                    <Image url="/static/logo/newPdfExtract.png" />
                   </image>
                 </ImageView>
               </graphic>
@@ -104,12 +103,11 @@
               <graphic>
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="/static/logo/docxEmbed.png" />
+                    <Image url="/static/logo/newWordEmbed.png" />
                   </image>
                 </ImageView>
               </graphic>
             </JFXButton>
-
             <JFXButton layoutY="260.0" fx:id="docxExtract" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#docxExtract">
               <font>
@@ -118,11 +116,39 @@
               <graphic>
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="/static/logo/docxExtract.png" />
+                    <Image url="/static/logo/newWordExtract.png" />
                   </image>
                 </ImageView>
               </graphic>
             </JFXButton>
+
+              <Label layoutX="12.0" layoutY="360.0"  text="-- Excel --" />
+              <JFXButton layoutY="385.0" fx:id="excelEmbed" prefHeight="50.0" prefWidth="50.0"
+                         text="嵌入信息" textFill="WHITE" onAction="#excelEmbed">
+                  <font>
+                      <Font name="System Bold" size="20.0" />
+                  </font>
+                  <graphic>
+                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="/static/logo/newExcelEmbed.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </JFXButton>
+              <JFXButton layoutY="450.0" fx:id="excelExtract" prefHeight="50.0" prefWidth="50.0"
+                         text="嵌入信息" textFill="WHITE" onAction="#excelExtract">
+                  <font>
+                      <Font name="System Bold" size="20.0" />
+                  </font>
+                  <graphic>
+                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="/static/logo/newExcelExtract.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </JFXButton>
 
           </children>
         </AnchorPane>
@@ -163,16 +189,23 @@
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="GUI Author: Qichao Ying from Fudan University" HBox.hgrow="ALWAYS">
+        <Label maxHeight="3" maxWidth="-1.0" text="GUI Author: Qichao Ying from Fudan University" HBox.hgrow="ALWAYS">
           <font>
-            <Font size="11.0" fx:id="x3" />
+            <Font size="14.0" fx:id="x3" />
           </font>
           <textFill>
             <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
           </textFill>
         </Label>
         <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-        <Label fx:id="filename" font="$x3" maxWidth="-1.0" text="Last Modify: 2020.7.6" textFill="$x4" HBox.hgrow="NEVER" />
+        <Label fx:id="filename" maxWidth="-1.0" text="Last Modify: 2020.7.6" textFill="$x6" HBox.hgrow="NEVER" >
+            <font>
+                <Font size="14.0" fx:id="x5" />
+            </font>
+            <textFill>
+                <Color blue="0.625" green="0.625" red="0.625" fx:id="x6" />
+            </textFill>
+        </Label>
       </children>
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

@@ -58,9 +58,14 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     private JFXButton docxEmbed;
     @FXML
+    private JFXButton excelEmbed;
+    @FXML
+    private JFXButton excelExtract;
+    @FXML
     private Button docxExtract;
     @FXML
     private Button btnBack;
+
     @FXML
     private ImageView welcomeLogo;
     @FXML
@@ -81,18 +86,18 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     public void initialize(URL location, ResourceBundle resources) {
 //        Class<?> clazz = this.getClass();
 //        InputStream input = clazz.getResourceAsStream("/com/xntutor/javafx/icon/java-32.png");
-        Image logoImage = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\logo.jpg");
-        Image wordImage = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\wordImage.png");
-        Image pdfImage = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\pdfImage.png");
-
+        Image logoImage = new Image(getClass().getResource("/static/logo/logo.jpg").toExternalForm());
+        Image wordImage = new Image(getClass().getResource("/static/logo/wordImage.png").toExternalForm());
+        Image pdfImage = new Image(getClass().getResource("/static/logo/pdfImage.png").toExternalForm());
         //function1.setImage(image);function2.setImage(image);
         model.textProperty().addListener((obs, oldText, newText) -> filename.setText(newText));
         model.isWordProperty().addListener((obs, oldbool, isWord) -> {
             String name = filename.getText();
-            if (isWord)
-                welcomeLogo.setImage(new Image("file:"+name.substring(0,name.length()-4)+".jpg"));
+            System.out.println(isWord);
+            if (!isWord.equals("Word"))
+                welcomeLogo.setImage(new Image("file:"+name.substring(0,name.indexOf("."))+".jpg"));
             else
-                welcomeLogo.setImage(pdfImage);
+                welcomeLogo.setImage(wordImage);
         });
         System.out.println("- LoginController initialized - Got Text:"+filename.getText());
 //        try {
@@ -117,6 +122,31 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
         }
 
     }
+
+    @FXML
+    public void excelEmbed(ActionEvent actionEvent) throws Exception{
+        System.out.println("-- Go to Excel Watermark --");
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("ExcelMark文档水印溯源系统");
+
+    }
+
+    @FXML
+    public void excelExtract(ActionEvent actionEvent) throws Exception{
+        System.out.println("-- Go to Excel Watermark --");
+        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excelExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("ExcelMark文档水印溯源系统");
+
+    }
+
 
     @FXML
     public void docxEmbed(ActionEvent actionEvent) throws Exception{
