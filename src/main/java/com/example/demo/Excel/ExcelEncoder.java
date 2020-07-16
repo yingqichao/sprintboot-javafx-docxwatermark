@@ -132,8 +132,9 @@ public class ExcelEncoder extends AbstractEncoder {
     }
 
     public boolean run(String filePath, String outpath,int[] args) throws Exception{
-        for(int arg:args)
-            banColList.add(arg);
+        if(args!=null)
+            for(int arg:args)
+                banColList.add(arg);
 //        POIXMLProperties.ExtendedProperties expProps = (this.wb).getProperties().getExtendedProperties();
 //        (this.wb).getProperties().getCoreProperties().setDescription("Qichao Ying");
         System.out.println("-----------------------------Embedding---------------------------------------");

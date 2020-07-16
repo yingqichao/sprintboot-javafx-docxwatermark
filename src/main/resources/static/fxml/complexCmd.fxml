@@ -23,36 +23,49 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="DocxMark">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
+            <MenuItem onAction="#docxEmbed" mnemonicParsing="false" text="Docx嵌入" />
+            <MenuItem onAction="#docxExtract" mnemonicParsing="false" text="Docx提取" />
+<!--            <Menu mnemonicParsing="false" text="使用说明" />-->
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" text="使用说明" />
+<!--            <MenuItem mnemonicParsing="false" text="Save" />-->
+<!--            <MenuItem mnemonicParsing="false" text="Save As…" />-->
+<!--            <MenuItem mnemonicParsing="false" text="Revert" />-->
+<!--            <SeparatorMenuItem mnemonicParsing="false" />-->
+<!--            <MenuItem mnemonicParsing="false" text="Preferences…" />-->
+<!--            <SeparatorMenuItem mnemonicParsing="false" />-->
+<!--            <MenuItem mnemonicParsing="false" text="Quit" />-->
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="PdfMark">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
+              <MenuItem onAction="#pdfEmbed" mnemonicParsing="false" text="Pdf嵌入" />
+              <MenuItem onAction="#pdfExtract" mnemonicParsing="false" text="Pdf提取" />
+              <!--            <Menu mnemonicParsing="false" text="使用说明" />-->
+              <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="使用说明" />
           </items>
         </Menu>
+          <Menu mnemonicParsing="false" text="ExcelMark">
+              <items>
+                  <MenuItem onAction="#excelEmbed" mnemonicParsing="false" text="Excel嵌入" />
+                  <MenuItem onAction="#excelExtract" mnemonicParsing="false" text="Excel提取" />
+                  <!--            <Menu mnemonicParsing="false" text="使用说明" />-->
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="使用说明" />
+              </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="QRcode">
+              <items>
+                  <MenuItem  mnemonicParsing="false" text="二维码美化" />
+
+                  <!--            <Menu mnemonicParsing="false" text="使用说明" />-->
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="使用说明" />
+              </items>
+          </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About Us" onAction="#showInfo"/>
@@ -67,7 +80,7 @@
 <!--            Left-->
 
             <Label layoutX="15.0" layoutY="5.0"  text="-- PDF --" />
-            <JFXButton layoutY="25.0" fx:id="pdfEmbed" prefHeight="50.0" prefWidth="50.0"
+            <JFXButton layoutY="15.0" fx:id="pdfEmbed" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#pdfEmbed">
               <font>
                 <Font name="System Bold" size="20.0" />
@@ -80,7 +93,7 @@
                 </ImageView>
               </graphic>
             </JFXButton>
-            <JFXButton layoutY="80.0" fx:id="pdfExtract" prefHeight="50.0" prefWidth="50.0"
+            <JFXButton layoutY="70.0" fx:id="pdfExtract" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#pdfExtract">
               <font>
                 <Font name="System Bold" size="20.0" />
@@ -94,8 +107,8 @@
               </graphic>
             </JFXButton>
 
-            <Label layoutX="12.0" layoutY="180.0"  text="-- Word --" />
-            <JFXButton layoutY="205.0" fx:id="docxEmbed" prefHeight="50.0" prefWidth="50.0"
+            <Label layoutX="12.0" layoutY="140.0"  text="-- Word --" />
+            <JFXButton layoutY="155.0" fx:id="docxEmbed" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#docxEmbed">
               <font>
                 <Font name="System Bold" size="20.0" />
@@ -108,7 +121,7 @@
                 </ImageView>
               </graphic>
             </JFXButton>
-            <JFXButton layoutY="260.0" fx:id="docxExtract" prefHeight="50.0" prefWidth="50.0"
+            <JFXButton layoutY="210.0" fx:id="docxExtract" prefHeight="50.0" prefWidth="50.0"
                        text="嵌入信息" textFill="WHITE" onAction="#docxExtract">
               <font>
                 <Font name="System Bold" size="20.0" />
@@ -122,8 +135,8 @@
               </graphic>
             </JFXButton>
 
-              <Label layoutX="12.0" layoutY="360.0"  text="-- Excel --" />
-              <JFXButton layoutY="385.0" fx:id="excelEmbed" prefHeight="50.0" prefWidth="50.0"
+              <Label layoutX="12.0" layoutY="280.0"  text="-- Excel --" />
+              <JFXButton layoutY="295.0" fx:id="excelEmbed" prefHeight="50.0" prefWidth="50.0"
                          text="嵌入信息" textFill="WHITE" onAction="#excelEmbed">
                   <font>
                       <Font name="System Bold" size="20.0" />
@@ -136,7 +149,7 @@
                       </ImageView>
                   </graphic>
               </JFXButton>
-              <JFXButton layoutY="450.0" fx:id="excelExtract" prefHeight="50.0" prefWidth="50.0"
+              <JFXButton layoutY="360.0" fx:id="excelExtract" prefHeight="50.0" prefWidth="50.0"
                          text="嵌入信息" textFill="WHITE" onAction="#excelExtract">
                   <font>
                       <Font name="System Bold" size="20.0" />
@@ -145,6 +158,21 @@
                       <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                               <Image url="/static/logo/newExcelExtract.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </JFXButton>
+
+              <Label layoutX="12.0" layoutY="430.0"  text="-- QrCode --" />
+              <JFXButton layoutY="445.0" fx:id="QrCode" prefHeight="50.0" prefWidth="50.0"
+                         text="嵌入信息" textFill="WHITE" onAction="#QrMain">
+                  <font>
+                      <Font name="System Bold" size="20.0" />
+                  </font>
+                  <graphic>
+                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="/static/logo/QRcode.png" />
                           </image>
                       </ImageView>
                   </graphic>

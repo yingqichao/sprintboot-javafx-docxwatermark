@@ -486,8 +486,9 @@ public class ExcelDecoder extends AbstractDecoder{
     }
 
     public List<String> run(String filePath,int[] args) throws Exception{
-        for(int arg:args)
-            banColList.add(arg);
+        if(args!=null && args.length!=0)
+            for(int arg:args)
+                banColList.add(arg);
         //Reads from stream, applying the LT decoding algorithm to incoming encoded blocks until sufficiently many blocks have been received to reconstruct the entire file.
         System.out.println("-----------------------------Extraction---------------------------------------");
 

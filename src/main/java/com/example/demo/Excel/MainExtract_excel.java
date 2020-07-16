@@ -16,7 +16,7 @@ import static com.example.demo.Excel.Setting.Settings.SHORT;
  * @Description DEFAULT
  */
 public class MainExtract_excel {
-    public static List<String> Extract(String filename,String append,String filePath,int startRow,int[] args) throws Exception{
+    public static List<String> Extract(String filePath,int startRow,int[] args) throws Exception{
 
         ExcelDecoder extract = new ExcelDecoder(new File(filePath),0.05,SHORT);
         System.out.println("\n================= Extract from file " + "\"" + filePath + "\" =================");
@@ -62,7 +62,7 @@ public class MainExtract_excel {
         String wmStr = Util.readWatermark("src//watermark.txt");
         String filePath = "src//embedded_results//"+filename+"_embedded"+append;
 
-        List<String> result = Extract(filename,append,filePath,0,args);
+        List<String> result = Extract(filePath,0,null);
 
         System.out.println("------------------------");
         System.out.println("英文参考： "+result.get(0));

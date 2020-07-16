@@ -20,7 +20,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -62,6 +61,8 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     private JFXButton excelExtract;
     @FXML
+    private JFXButton QrCode;
+    @FXML
     private Button docxExtract;
     @FXML
     private Button btnBack;
@@ -89,15 +90,18 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
         Image logoImage = new Image(getClass().getResource("/static/logo/logo.jpg").toExternalForm());
         Image wordImage = new Image(getClass().getResource("/static/logo/wordImage.png").toExternalForm());
         Image pdfImage = new Image(getClass().getResource("/static/logo/pdfImage.png").toExternalForm());
-        //function1.setImage(image);function2.setImage(image);
+        Image excelImage = new Image(getClass().getResource("/static/logo/excelImage.png").toExternalForm());
+
         model.textProperty().addListener((obs, oldText, newText) -> filename.setText(newText));
         model.isWordProperty().addListener((obs, oldbool, isWord) -> {
             String name = filename.getText();
             System.out.println(isWord);
-            if (!isWord.equals("Word"))
-                welcomeLogo.setImage(new Image("file:"+name.substring(0,name.indexOf("."))+".jpg"));
-            else
+            if (isWord.equals("Word"))
                 welcomeLogo.setImage(wordImage);
+            else if (isWord.equals("Excel"))
+                welcomeLogo.setImage(excelImage);
+            else
+                welcomeLogo.setImage(new Image("file:"+name.substring(0,name.indexOf("."))+".jpg"));
         });
         System.out.println("- LoginController initialized - Got Text:"+filename.getText());
 //        try {
@@ -114,6 +118,21 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     }
 
     @FXML
+    public void QrMain(ActionEvent actionEvent) throws Exception {
+        System.out.println("-- Go to QrCode --");
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/QrCode.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        QrCodeController controller = (QrCodeController) fxmlLoader.getController();
+
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("QrCode");
+    }
+
+    @FXML
     public void openRelatedFile(ActionEvent actionEvent) throws Exception{
         try {
             getHostServices().showDocument(filename.getText());
@@ -126,7 +145,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void excelEmbed(ActionEvent actionEvent) throws Exception{
         System.out.println("-- Go to Excel Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Excel");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
@@ -138,7 +161,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void excelExtract(ActionEvent actionEvent) throws Exception{
         System.out.println("-- Go to Excel Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excelExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        //Parent target = FXMLLoader.load(getClass().getResource("/src/main/backup/excelExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Excel");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
@@ -151,7 +178,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void docxEmbed(ActionEvent actionEvent) throws Exception{
         System.out.println("-- Go to Docx Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docx.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docx.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Word");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
@@ -163,7 +194,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void docxExtract(ActionEvent actionEvent) throws Exception{
         System.out.println("-- Go to Docx Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docxExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docxExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Word");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
@@ -184,7 +219,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void pdfEmbed(ActionEvent actionEvent) throws Exception {
         System.out.println("-- Go to Pdf Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdf.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+//        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdf.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Pdf");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
@@ -196,7 +235,11 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void pdfExtract(ActionEvent actionEvent) throws Exception {
         System.out.println("-- Go to Pdf Watermark --");
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdfExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+//        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdfExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Pdf");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
