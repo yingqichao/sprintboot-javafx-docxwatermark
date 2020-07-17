@@ -205,15 +205,15 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         watermark = waterText.getText();
         savename = outFileName.getText();
         if(filepath.length()==0){
-            f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
+            Globe.f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
             return;
         }
         if(watermark.length()==0) {
-            f_alert_informationDialog("请输入水印内容！", "单击确定以返回");
+            Globe.f_alert_informationDialog("请输入水印内容！", "单击确定以返回");
             return;
         }
         if(outDir.length()==0 || savename.length()==0){
-            f_alert_informationDialog("请输入保存文件的路径/名称！","单击确定以返回");
+            Globe.f_alert_informationDialog("请输入保存文件的路径/名称！","单击确定以返回");
             return;
         }
         System.out.println("水印内容： "+watermark);
@@ -225,7 +225,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         }else if(mode.equals("Excel")){
             excelEmbed(actionEvent);
         }else{
-            f_alert_informationDialog("模式出错，请重试！","单击确定以返回");
+            Globe.f_alert_informationDialog("模式出错，请重试！","单击确定以返回");
         }
     }
 
@@ -244,7 +244,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
         }catch (Exception e){
             //e.printStackTrace();
-            f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+            Globe.f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
             e.printStackTrace(pw);
             pw.flush();
             sw.flush();
@@ -282,7 +282,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             sendText(actionEvent,outPathFile);
 
         }catch (Exception e){
-            f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+            Globe.f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
             e.printStackTrace();
         }
 
@@ -293,7 +293,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         PrintWriter pw = new PrintWriter(sw);
 
         if(watermark.length()>16){
-            f_alert_informationDialog("水印长度超出限定长度（16个汉字）","单击确定以返回");
+            Globe.f_alert_informationDialog("水印长度超出限定长度（16个汉字）","单击确定以返回");
             return;
         }
 
@@ -306,7 +306,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
         }catch (Exception e){
             //e.printStackTrace();
-            f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
+            Globe.f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
             e.printStackTrace(pw);
             pw.flush();
             sw.flush();
@@ -382,7 +382,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
     @FXML
     public void startExtract(ActionEvent actionEvent) {
         if(filepath.length()==0){
-            f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
+            Globe.f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
             return;
         }
         List<String> extracted = new LinkedList<>();
@@ -398,7 +398,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             }else if(mode.equals("Excel")){
                 extracted = excelExtract(actionEvent);
             }else{
-                f_alert_informationDialog("模式出错，请重试！","单击确定以返回");
+                Globe.f_alert_informationDialog("模式出错，请重试！","单击确定以返回");
             }
 
             //List<String> extracted = Dom4jHelper.Extract(filepath, desDir, null);
@@ -409,7 +409,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             System.out.println("中文提取结果： " + chinese);
             //关闭窗口
             ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-            f_alert_informationDialog("提取已完成！","英文提取结果： " + english+" ，中文提取结果： " + chinese);
+            Globe.f_alert_informationDialog("提取已完成！","英文提取结果： " + english+" ，中文提取结果： " + chinese);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -485,42 +485,5 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         if(showFile!=null) showFile.setText("* 未选择文件 *");
     }
 
-
-
-    /**
-     * 弹出一个通用的确定对话框
-     * @param p_header 对话框的信息标题
-     * @param p_message 对话框的信息
-     * @return 用户点击了是或否
-     */
-    public boolean f_alert_confirmDialog(String p_header,String p_message){
-//        按钮部分可以使用预设的也可以像这样自己 new 一个
-        Alert _alert = new Alert(Alert.AlertType.CONFIRMATION,p_message,new ButtonType("取消", ButtonBar.ButtonData.NO),
-                new ButtonType("确定", ButtonBar.ButtonData.YES));
-//        设置窗口的标题
-        _alert.setTitle("确认");
-        _alert.setHeaderText(p_header);
-//        设置对话框的 icon 图标，参数是主窗口的 stage
-        //_alert.initOwner(d_stage);
-//        showAndWait() 将在对话框消失以前不会执行之后的代码
-        Optional<ButtonType> _buttonType = _alert.showAndWait();
-//        根据点击结果返回
-        if(_buttonType.get().getButtonData().equals(ButtonBar.ButtonData.YES)){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    //    弹出一个信息对话框
-    public void f_alert_informationDialog(String p_header, String p_message){
-        Alert _alert = new Alert(Alert.AlertType.INFORMATION);
-        _alert.setTitle("Error");
-        _alert.setHeaderText(p_header);
-        _alert.setContentText(p_message);
-        //_alert.initOwner(d_stage);
-        _alert.show();
-    }
 
 }

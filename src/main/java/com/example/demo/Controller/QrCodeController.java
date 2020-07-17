@@ -5,6 +5,7 @@ import com.example.demo.Globe;
 import com.google.test.InitInfo;
 import com.google.test.MyQRCodeWriter;
 import com.google.zxing.WriterException;
+import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -87,6 +88,16 @@ public class QrCodeController extends AbstractJavaFxApplicationSupport implement
     private AnchorPane anchor2;
     @FXML
     private AnchorPane anchor3;
+    @FXML
+    private AnchorPane anchor4;
+    @FXML
+    private AnchorPane anchor5;
+    @FXML
+    private JFXButton btnShowOriImage;
+    @FXML
+    private JFXButton btnShowOutImage;
+
+    private String outPathFile;
 
 
     @Override
@@ -94,25 +105,45 @@ public class QrCodeController extends AbstractJavaFxApplicationSupport implement
         if(anchor1!=null) anchor1.setStyle(cssDefault);
         if(anchor2!=null) anchor2.setStyle(cssDefault);
         if(anchor3!=null) anchor3.setStyle(cssDefault);
+        if(anchor4!=null) anchor4.setStyle(cssDefault);
+        if(anchor5!=null) anchor5.setStyle(cssDefault);
         oriImage.setStyle(cssDefault);outImage.setStyle(cssDefault);
     }
 
     @FXML
     private void start(ActionEvent actionEvent) throws Exception {
-        String outPathFile = outDir+"\\"+savename+".png";
+        watermark = waterText.getText();
+        savename = outFileName.getText();
+        if(filepath.length()==0){
+            Globe.f_alert_informationDialog("必须先选择需要执行操作的文件！","单击确定以返回");
+            return;
+        }
+        if(watermark.length()==0) {
+            Globe.f_alert_informationDialog("请输入水印内容！", "单击确定以返回");
+            return;
+        }
+        if(outDir.length()==0 || savename.length()==0){
+            Globe.f_alert_informationDialog("请输入保存文件的路径/名称！","单击确定以返回");
+            return;
+        }
+        System.out.println("水印内容： "+watermark);
+        System.out.println("文件保存名： "+savename);
+
+        outPathFile = outDir+"\\"+savename+".png";
         String ErrorCorrectionLevel = "L";
         String Ex = "";
         String realWidth = "5";String realheight = "5";
         InitInfo init = InitInfo.getInstance();
         //   init.setWidth(Integer.valueOf(QRwidth.getText()));
         //  init.setHeight(Integer.valueOf(QRheight.getText()));
-        init.setOutputFile(new File(outPathFile));
+        init.setOutputFile(new File(outDir));
         init.setGraphUri(new File(filepath));
         init.setErrorCorrectionLevel(ErrorCorrectionLevel);
         init.setrealWidth(Integer.valueOf(realWidth));
         init.setrealHeight(Integer.valueOf(realheight));
         init.setContents(watermark);
         init.setEx(Ex);
+        init.setFileName(savename);
         try {
             new MyQRCodeWriter().encode();
             System.out.println("制作完成！");
@@ -120,6 +151,23 @@ public class QrCodeController extends AbstractJavaFxApplicationSupport implement
         } catch (WriterException we) {
             // TODO Auto-generated catch block
             we.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    public void openRelatedFile(ActionEvent actionEvent) throws Exception{
+        String str = "";
+        try {
+
+            if(actionEvent.getSource().equals(btnShowOriImage))
+                str = filepath;
+            else
+                str = outPathFile;
+            if(str!=null && str.length()!=0)
+                getHostServices().showDocument(str);
+        }catch (Exception e){
+            System.out.println("打开文件操作无效，文件名："+str);
         }
 
     }

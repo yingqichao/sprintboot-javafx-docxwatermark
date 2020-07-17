@@ -49,6 +49,7 @@ public final class MyQRCodeWriter {
     private static InitInfo initInfo;
 
     public MyQRCodeWriter() {
+
         this.initInfo = InitInfo.getInstance();
     }
 
@@ -157,11 +158,12 @@ public final class MyQRCodeWriter {
         int temprealH=initInfo.getrealHeight();
 
         Encoder2.encode(contents, errorCorrectionLevel, encoding, code);
-        try {
-            writeToFile2(code.getMatrix());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }  
+        //保存正常的二维码
+//        try {
+//            writeToFile2(code.getMatrix());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         for (int t = 0; t <= 7; t++) {//八组掩码
             code.setMaskPattern(t);
             Encoder.encode(contents, errorCorrectionLevel, encoding, code);

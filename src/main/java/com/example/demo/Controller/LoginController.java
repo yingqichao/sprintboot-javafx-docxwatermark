@@ -135,7 +135,8 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     public void openRelatedFile(ActionEvent actionEvent) throws Exception{
         try {
-            getHostServices().showDocument(filename.getText());
+            if(filename.getText()!=null && filename.getText().length()!=0)
+                getHostServices().showDocument(filename.getText());
         }catch (Exception e){
             System.out.println("打开文件操作无效，文件名："+filename.getText());
         }

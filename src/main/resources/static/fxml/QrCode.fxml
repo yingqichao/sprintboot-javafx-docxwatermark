@@ -10,7 +10,8 @@
 <!--<?com.jfoenix.controls.JFXTextField?>-->
 <!--<?import com.jfoenix.controls.JFXButton?>-->
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.QrCodeController">
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.QrCodeController">
     <children>
       <Label layoutX="50.0" layoutY="36.0" text="QrCode美化">
          <font>
@@ -113,7 +114,7 @@
               <font>
                   <Font size="16.0" />
               </font></TextField>
-          <Label fx:id="extension" layoutX="427.0" layoutY="16.0" text=".docx">
+          <Label fx:id="extension" layoutX="427.0" layoutY="16.0" text=".png">
               <font>
                   <Font size="14.0" />
               </font>
@@ -126,8 +127,50 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="oriImage" fitHeight="250.0" fitWidth="250.0" layoutX="87.0" layoutY="379.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="outImage" fitHeight="250.0" fitWidth="250.0" layoutX="363.0" layoutY="379.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane fx:id="anchor4" layoutX="26.0" layoutY="377.0" prefHeight="326.0" prefWidth="291.0">
+         <children>
+
+             <JFXButton fx:id="btnShowOriImage" layoutX="21.0" layoutY="14.0" prefHeight="50.0" onAction="#openRelatedFile">
+                 <font>
+                     <Font name="System Bold" size="20.0" />
+                 </font>
+                 <graphic>
+                     <ImageView fx:id="oriImage" fitHeight="250.0" fitWidth="250.0"  pickOnBounds="true" preserveRatio="true" />
+
+                 </graphic>
+             </JFXButton>
+
+
+
+<!--            <ImageView fx:id="oriImage" fitHeight="250.0" fitWidth="250.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />-->
+            <Label layoutX="108.0" layoutY="303.0" text="风格图像">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchor5" layoutX="352.0" layoutY="377.0" prefHeight="326.0" prefWidth="291.0">
+         <children>
+             <JFXButton fx:id="btnShowOutImage" layoutX="21.0" layoutY="14.0" prefHeight="50.0" onAction="#openRelatedFile">
+                 <font>
+                     <Font name="System Bold" size="20.0" />
+                 </font>
+                 <graphic>
+                     <ImageView fx:id="outImage" fitHeight="250.0" fitWidth="250.0"  pickOnBounds="true" preserveRatio="true" />
+
+                 </graphic>
+             </JFXButton>
+
+
+<!--             <ImageView fx:id="outImage" fitHeight="250.0" fitWidth="250.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />-->
+            <Label layoutX="103.0" layoutY="303.0" text="美化二维码图像">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
 <!--      <Label layoutX="167.0" layoutY="429.0" text="(UTF-8)" />-->
 <!--      <Label layoutX="172.0" layoutY="468.0" text="(GBK)" />-->
 

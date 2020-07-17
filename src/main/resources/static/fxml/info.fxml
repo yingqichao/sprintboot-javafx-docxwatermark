@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.Controller.ErrController">
     <children>
-      <Label layoutX="38.0" layoutY="35.0" text="关于我们">
+      <Label layoutX="134.0" layoutY="45.0" text="关于我们">
          <font>
             <Font size="24.0" />
          </font>
@@ -19,6 +18,7 @@
       <Label layoutX="20.0" layoutY="199.0" prefHeight="42.0" prefWidth="420.0" text="UI界面开发： 复旦大学 应祺超" />
       <Label layoutX="20.0" layoutY="226.0" prefHeight="55.0" prefWidth="453.0" text="开发版本：v1.0 " />
       <Label layoutX="20.0" layoutY="274.0" prefHeight="32.0" prefWidth="453.0" text="开发时间： 2020/6/25           最后修改时间： 2020/6/30" />
+      <ImageView fx:id="logo" fitHeight="89.0" fitWidth="96.0" layoutX="23.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
 
     </children>
 </AnchorPane>

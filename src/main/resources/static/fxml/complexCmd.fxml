@@ -59,7 +59,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="QRcode">
               <items>
-                  <MenuItem  mnemonicParsing="false" text="二维码美化" />
+                  <MenuItem onAction="#QrMain" mnemonicParsing="false" text="二维码美化" />
 
                   <!--            <Menu mnemonicParsing="false" text="使用说明" />-->
                   <SeparatorMenuItem mnemonicParsing="false" />
