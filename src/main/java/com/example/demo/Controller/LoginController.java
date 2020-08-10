@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Globe;
 import com.example.demo.entity.AppModel;
 import com.example.demo.entity.WelcomeFXML;
 import com.jfoenix.controls.JFXButton;
@@ -63,9 +64,17 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     @FXML
     private JFXButton QrCode;
     @FXML
+    private JFXButton VideoEmbed;
+    @FXML
+    private JFXButton VideoExtract;
+    @FXML
     private Button docxExtract;
     @FXML
     private Button btnBack;
+    @FXML
+    private Button login;
+    @FXML
+    private Label User;
 
     @FXML
     private ImageView welcomeLogo;
@@ -82,6 +91,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     // 必须static 类型
     public  static AppModel model = new AppModel();
 
+    public String showFileName = null;
+    public String username = null;
+    public String password = null;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -94,15 +107,17 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
         model.textProperty().addListener((obs, oldText, newText) -> filename.setText(newText));
         model.isWordProperty().addListener((obs, oldbool, isWord) -> {
-            String name = filename.getText();
+            showFileName = filename.getText();
             System.out.println(isWord);
             if (isWord.equals("Word"))
                 welcomeLogo.setImage(wordImage);
             else if (isWord.equals("Excel"))
                 welcomeLogo.setImage(excelImage);
             else
-                welcomeLogo.setImage(new Image("file:"+name.substring(0,name.indexOf("."))+".jpg"));
+                welcomeLogo.setImage(new Image("file:"+showFileName.substring(0,showFileName.indexOf("."))+".jpg"));
         });
+        model.usernameProperty().addListener((obs, oldText, newText) -> {if(newText!=null) {User.setText(newText);username = newText;}});
+
         System.out.println("- LoginController initialized - Got Text:"+filename.getText());
 //        try {
 //            Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/welcome.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
@@ -118,7 +133,26 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     }
 
     @FXML
+    public void onLogin(ActionEvent actionEvent) throws Exception {
+        System.out.println("-- Go to Log In --");
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/login.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        ErrController controller = (ErrController) fxmlLoader.getController();
+
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("Log In");
+    }
+
+    @FXML
     public void QrMain(ActionEvent actionEvent) throws Exception {
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to QrCode --");
         //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/QrCode.fxml"));
@@ -130,6 +164,44 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
         stg.setScene(scene); //将场景载入舞台；
         stg.show(); //显示窗口；
         stg.setTitle("QrCode");
+    }
+
+    @FXML
+    public void VideoEmbed(ActionEvent actionEvent) throws Exception {
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
+        System.out.println("-- Go to Video Watermark --");
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Video");
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("VideoMark文档水印溯源系统");
+    }
+
+    @FXML
+    public void VideoExtract(ActionEvent actionEvent) throws Exception {
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
+        System.out.println("-- Go to Video Watermark --");
+        //Parent target = FXMLLoader.load(getClass().getResource("/src/main/backup/excelExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Video");
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("VideoMark文档水印溯源系统");
     }
 
     @FXML
@@ -145,6 +217,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     @FXML
     public void excelEmbed(ActionEvent actionEvent) throws Exception{
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to Excel Watermark --");
         //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
@@ -161,6 +237,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     @FXML
     public void excelExtract(ActionEvent actionEvent) throws Exception{
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to Excel Watermark --");
         //Parent target = FXMLLoader.load(getClass().getResource("/src/main/backup/excelExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
@@ -178,6 +258,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     @FXML
     public void docxEmbed(ActionEvent actionEvent) throws Exception{
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to Docx Watermark --");
         //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docx.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
@@ -194,6 +278,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     @FXML
     public void docxExtract(ActionEvent actionEvent) throws Exception{
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to Docx Watermark --");
         //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/docxExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
@@ -219,6 +307,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     @FXML
     public void pdfEmbed(ActionEvent actionEvent) throws Exception {
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to Pdf Watermark --");
 //        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdf.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
@@ -235,6 +327,10 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
 
     @FXML
     public void pdfExtract(ActionEvent actionEvent) throws Exception {
+        if(username==null){
+            Globe.f_alert_informationDialog("需要先登录才能执行操作！","Please log in first!");
+            return;
+        }
         System.out.println("-- Go to Pdf Watermark --");
 //        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/pdfExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));

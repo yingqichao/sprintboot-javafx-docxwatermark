@@ -8,7 +8,6 @@ import com.example.demo.Globe;
 import com.example.demo.PdfHelper.PdfParsing;
 import com.example.demo.PdfHelper.PdfWm;
 import com.example.demo.Setting;
-import com.example.demo.VideoWatermark;
 import com.example.demo.WordHelper.WordParsing;
 import com.example.demo.entity.AppModel;
 import com.example.demo.entity.WelcomeFXML;
@@ -47,7 +46,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 
 @FXMLController
-public class DocxController extends AbstractJavaFxApplicationSupport implements Initializable {
+public class VideoController extends AbstractJavaFxApplicationSupport implements Initializable {
 
     @FXML
     private TextField waterText;
@@ -122,17 +121,15 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
     private String mode = model.getText();
 
-//    final ToggleGroup group = new ToggleGroup();
+    //    final ToggleGroup group = new ToggleGroup();
     // 必须static 类型
     public  static AppModel model = new AppModel();
-    public String ffmpegPath = getClass().getResource("/static/").toExternalForm();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Image excel = new Image(getClass().getResource("/static/logo/excelImage.png").toExternalForm());
         Image word = new Image(getClass().getResource("/static/logo/wordImage.png").toExternalForm());
         Image pdf = new Image(getClass().getResource("/static/logo/pdfImage.png").toExternalForm());
-        Image video = new Image(getClass().getResource("/static/logo/videoImage.png").toExternalForm());
         System.out.println("Model.Text: "+model.getText()+" Mode: "+mode);
         model.textProperty().addListener((obs, oldText, newText) -> {
             mode = newText;
@@ -146,9 +143,6 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
                 else if(mode.equals("Pdf"))  {
                     wordImage.setImage(pdf);if(extension!=null) extension.setText(".pdf");
                 }
-                else if(mode.equals("Video"))  {
-                    wordImage.setImage(video);if(extension!=null) extension.setText(".mp4");
-                }
         });
         if(mode!=null)
             if(mode.equals("Word"))  {
@@ -159,9 +153,6 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             }
             else if(mode.equals("Pdf"))  {
                 wordImage.setImage(pdf);if(extension!=null) extension.setText(".pdf");
-            }
-            else if(mode.equals("Video"))  {
-                wordImage.setImage(video);if(extension!=null) extension.setText(".mp4");
             }
 
         //Image image = new Image("file:D:\\\\sprintboot-javafx-docxwatermark\\\\src\\\\main\\\\resources\\\\static\\\\logo\\\\solve.jpg");
@@ -233,8 +224,6 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
             pdfEmbed(actionEvent);
         }else if(mode.equals("Excel")){
             excelEmbed(actionEvent);
-        }else if(mode.equals("Video")){
-            videoEmbed(actionEvent);
         }else{
             Globe.f_alert_informationDialog("模式出错，请重试！","单击确定以返回");
         }
@@ -250,45 +239,6 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         //嵌入主逻辑
         try {
             MainEmbed_excel.Embed(filepath,null,watermark,outPathFile);
-            //f_alert_informationDialog("嵌入已完成！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
-            sendText(actionEvent,outPathFile);
-
-        }catch (Exception e){
-            //e.printStackTrace();
-            Globe.f_alert_informationDialog("嵌入失败！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
-            e.printStackTrace(pw);
-            pw.flush();
-            sw.flush();
-            errorMsg = sw.toString();
-            //打开新的窗口
-            showDetail(null);
-
-        } finally {
-            try {
-                pw.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            try {
-                sw.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-    }
-
-    public void videoEmbed(ActionEvent actionEvent) throws Exception {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-
-        String append = filepath.substring(filepath.indexOf("."));
-        extension.setText(append);
-        String outPathFile = outDir+"\\"+savename+append;
-
-        //嵌入主逻辑
-        try {
-            VideoWatermark.embed(filepath, watermark, ffmpegPath, outPathFile);
             //f_alert_informationDialog("嵌入已完成！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
             sendText(actionEvent,outPathFile);
 
@@ -447,8 +397,6 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
                 extracted = pdfExtract(actionEvent);
             }else if(mode.equals("Excel")){
                 extracted = excelExtract(actionEvent);
-            }else if(mode.equals("Video")){
-                extracted = videoExtract(actionEvent);
             }else{
                 Globe.f_alert_informationDialog("模式出错，请重试！","单击确定以返回");
             }
@@ -465,12 +413,6 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    public List<String> videoExtract(ActionEvent actionEvent) throws Exception{
-        String s = VideoWatermark.extract(filepath,ffmpegPath);
-        List<String> res = new LinkedList<>();res.add(s);res.add(s);
-        return res;
     }
 
     public List<String> docxExtract(ActionEvent actionEvent) throws Exception{

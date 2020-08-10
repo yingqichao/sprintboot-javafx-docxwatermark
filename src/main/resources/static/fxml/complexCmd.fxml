@@ -18,7 +18,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<?import javafx.scene.control.Button?>
+<VBox prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.demo.Controller.LoginController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -163,7 +164,7 @@
                   </graphic>
               </JFXButton>
 
-              <Label layoutX="12.0" layoutY="430.0"  text="-- QrCode --" />
+              <Label layoutX="12.0" layoutY="430.0"  text="-- QR --" />
               <JFXButton layoutY="445.0" fx:id="QrCode" prefHeight="50.0" prefWidth="50.0"
                          text="嵌入信息" textFill="WHITE" onAction="#QrMain">
                   <font>
@@ -178,20 +179,48 @@
                   </graphic>
               </JFXButton>
 
+              <Label layoutX="12.0" layoutY="510.0"  text="-- Video --" />
+              <JFXButton layoutY="525.0" fx:id="VideoEmbed" prefHeight="50.0" prefWidth="50.0"
+                         text="嵌入信息" textFill="WHITE" onAction="#VideoEmbed">
+                  <font>
+                      <Font name="System Bold" size="20.0" />
+                  </font>
+                  <graphic>
+                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="/static/logo/videoEmbed.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </JFXButton>
+              <JFXButton layoutY="580.0" fx:id="VideoExtract" prefHeight="50.0" prefWidth="50.0"
+                         text="嵌入信息" textFill="WHITE" onAction="#VideoExtract">
+                  <font>
+                      <Font name="System Bold" size="20.0" />
+                  </font>
+                  <graphic>
+                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="/static/logo/videoExtract.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </JFXButton>
+
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="550.0" prefWidth="550.0">
               <children>
 <!--                Center-->
 
-                  <JFXButton layoutX="100" layoutY="10" fx:id="btnRelatedFile" prefHeight="50.0" onAction="#openRelatedFile">
+                  <JFXButton layoutX="100" layoutY="50" fx:id="btnRelatedFile" prefHeight="50.0" onAction="#openRelatedFile">
                       <font>
                           <Font name="System Bold" size="20.0" />
                       </font>
                       <graphic>
-                          <ImageView fx:id="welcomeLogo" fitHeight="500.0" fitWidth="450.0"  pickOnBounds="true" preserveRatio="true" />
+                          <ImageView fx:id="welcomeLogo" fitHeight="550.0" fitWidth="550.0"  pickOnBounds="true" preserveRatio="true" />
 
                       </graphic>
                   </JFXButton>
@@ -210,6 +239,25 @@
         <AnchorPane  maxWidth="100.0" minWidth="100.0">
           <children>
 <!--              Right  -->
+              <Label layoutX="15.0" layoutY="5.0" fx:id="User" text=" 您还没有登录 " />
+              <Button layoutX="15.0" layoutY="30.0" fx:id="login" mnemonicParsing="false" onAction="#onLogin" prefHeight="30.0" prefWidth="60.0" text="登录">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </Button>
+<!--              <JFXButton layoutY="15.0" fx:id="login" prefHeight="50.0" prefWidth="50.0"-->
+<!--                         text="登录" textFill="WHITE" onAction="#pdfEmbed">-->
+<!--                  <font>-->
+<!--                      <Font name="System Bold" size="20.0" />-->
+<!--                  </font>-->
+<!--                  <graphic>-->
+<!--                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                          <image>-->
+<!--                              <Image url="/static/logo/newPdfEmbed.png" />-->
+<!--                          </image>-->
+<!--                      </ImageView>-->
+<!--                  </graphic>-->
+<!--              </JFXButton>-->
 
           </children>
         </AnchorPane>

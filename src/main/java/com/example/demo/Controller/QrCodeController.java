@@ -129,7 +129,7 @@ public class QrCodeController extends AbstractJavaFxApplicationSupport implement
         System.out.println("水印内容： "+watermark);
         System.out.println("文件保存名： "+savename);
 
-        outPathFile = outDir+"\\"+savename+".png";
+        outPathFile = outDir+"\\Beautify.png";
         String ErrorCorrectionLevel = "L";
         String Ex = "";
         String realWidth = "5";String realheight = "5";

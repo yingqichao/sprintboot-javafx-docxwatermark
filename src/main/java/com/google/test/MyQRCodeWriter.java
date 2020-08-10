@@ -73,11 +73,11 @@ public final class MyQRCodeWriter {
                 			output.setRGB(outputX, outputY, matrix.getRGB(inputX, inputY));	
             }
         }
-        File outputFile = new File(file, initInfo.getFileName() + "." + format);
-        for (int i = 1; outputFile.exists(); i++)//判断文件名是否重复
-        {
-            outputFile = new File(file, initInfo.getFileName() + "(" + i + ")" + "." + format);
-        }
+        File outputFile = new File(file, "Beautify." + format);
+//        for (int i = 1; outputFile.exists(); i++)//判断文件名是否重复
+//        {
+//            outputFile = new File(file, initInfo.getFileName() + "(" + i + ")" + "." + format);
+//        }
 
         if (!ImageIO.write(output, format, outputFile)) {
             System.out.println("生成图片失败");
@@ -114,11 +114,11 @@ public final class MyQRCodeWriter {
                     image.setRGB(x, y, (output.get(x, y) ? new Color(0,0,0).getRGB() : new Color(255,255,255).getRGB()));
                 }
             }
-            File outputFile = new File(file, initInfo.getFileName() + "." + format);
-            for (int i = 1; outputFile.exists(); i++)//判断文件名是否重复
-            {
-                outputFile = new File(file, initInfo.getFileName() + "(" + i + ")" + "." + format);
-            }
+            File outputFile = new File(file,   "pureQR." + format);
+//            for (int i = 1; outputFile.exists(); i++)//判断文件名是否重复
+//            {
+//                outputFile = new File(file, initInfo.getFileName() + "(" + i + ")" + "." + format);
+//            }
 
             if (!ImageIO.write(image, format, outputFile)) {
                 System.out.println("生成图片失败");
@@ -130,6 +130,8 @@ public final class MyQRCodeWriter {
         
 
     public void encode() throws WriterException {
+        //开始嵌入
+
         String contents = initInfo.getContents();
         String encoding = initInfo.getCharacterSet();
         if (contents == null || contents.length() == 0) {
@@ -157,6 +159,7 @@ public final class MyQRCodeWriter {
         int temprealW=initInfo.getrealWidth();
         int temprealH=initInfo.getrealHeight();
 
+        //正常的二维码，中间没有图像，code里面的matrix是数据
         Encoder2.encode(contents, errorCorrectionLevel, encoding, code);
         //保存正常的二维码
 //        try {

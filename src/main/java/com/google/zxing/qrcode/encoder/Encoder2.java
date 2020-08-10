@@ -125,14 +125,14 @@ public final class Encoder2 {
 
         BitArray preBits = new BitArray();//预掩码比特存储
     
-    
+        // 最终把bits填充到图像上去
         MatrixUtil.buildMatrix(finalBits, qrCode.getMaskPattern(), matrix,qrCode);
         qrCode.setMatrix(matrix);
 
         // Step 9.  Make sure we have a valid QR Code.确保我们有一个有效的二维码。
-        if (!qrCode.isValid()) {
-            throw new WriterException("Invalid QR code: " + qrCode.toString());
-        }
+//        if (!qrCode.isValid()) {
+//            throw new WriterException("Invalid QR code: " + qrCode.toString());
+//        }
     }
 
     /**
