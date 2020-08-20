@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Globe;
 import com.example.demo.entity.LoginFXML;
 import com.example.demo.entity.PdfFXML;
 //import com.example.demo.test.DialogBuilder;
@@ -23,23 +24,16 @@ import java.util.ResourceBundle;
 @FXMLController
 public class WelcomeController extends AbstractJavaFxApplicationSupport implements Initializable {
 
-    private boolean initialized = false;
+//    private boolean initialized = false;
 
     @FXML
-    private JFXButton toPDF;
-    @FXML
-    private JFXButton toWord;
-    @FXML
-    private Button login;
-    @FXML
-    private ImageView welcomeLogo;
+    private ImageView logo;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if(!initialized) {
             Image image = new Image(getClass().getResource("/static/logo/logo.jpg").toExternalForm());
-            welcomeLogo.setImage(image);
+            logo.setImage(image);
 
             System.out.println("- WelcomeController initialized -");
 //            try {
@@ -54,45 +48,39 @@ public class WelcomeController extends AbstractJavaFxApplicationSupport implemen
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-        }
+
     }
 
     @FXML
-    public void gotoPDF(ActionEvent actionEvent) {
-        AbstractJavaFxApplicationSupport.showView(PdfFXML.class);
-    }
+    public void VideoEmbed(ActionEvent actionEvent) throws Exception {
 
-    @FXML
-    public void gotoWord(ActionEvent actionEvent) throws Exception{
-        //launch(MainController.class, LoginFXML.class, null);
-        //AbstractJavaFxApplicationSupport.showView(LoginFXML.class);
-
-        Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/complexCmd.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        System.out.println("-- Go to Video Watermark --");
+        //Parent target = FXMLLoader.load(getClass().getResource("/static/fxml/excel.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docx.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Video");
         Scene scene = new Scene(target); //创建场景；
         Stage stg = new Stage();//创建舞台；
         stg.setScene(scene); //将场景载入舞台；
         stg.show(); //显示窗口；
-        this.getStage().close();
-        System.out.println("- WelcomeController Closed -");
+        stg.setTitle("VideoMark文档水印溯源系统");
     }
 
-//    @FXML
-//    public void usingjfoneix(ActionEvent actionEvent) {
-//        //launch(MainController.class, LoginFXML.class, null);
-//        //AbstractJavaFxApplicationSupport.showView(usingjfoneixFXML.class);
-//        new DialogBuilder(login).setNegativeBtn("取消", new DialogBuilder.OnClickListener() {
-//            @Override
-//            public void onClick() {
-//                //点击取消按钮之后执行的动作
-//                System.out.println("用户点击了取消");
-//            }
-//        }).setPositiveBtn("确定", new DialogBuilder.OnClickListener() {
-//            @Override
-//            public void onClick() {
-//                //点击确定按钮之后执行的动作
-//                System.out.println("用户点击了确定");
-//            }
-//        }).setTitle("提示").setMessage("hello world").create();
-//    }
+    @FXML
+    public void VideoExtract(ActionEvent actionEvent) throws Exception {
+
+        System.out.println("-- Go to Video Watermark --");
+        //Parent target = FXMLLoader.load(getClass().getResource("/src/main/backup/excelExtract.fxml"));//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/static/fxml/docxExtract.fxml"));
+        Parent target = fxmlLoader.load();//载入窗口B的定义文件；<span style="white-space:pre">	</span>
+        DocxController controller = (DocxController) fxmlLoader.getController();
+        controller.model.setText("Video");
+        Scene scene = new Scene(target); //创建场景；
+        Stage stg = new Stage();//创建舞台；
+        stg.setScene(scene); //将场景载入舞台；
+        stg.show(); //显示窗口；
+        stg.setTitle("VideoMark文档水印溯源系统");
+    }
 
 }

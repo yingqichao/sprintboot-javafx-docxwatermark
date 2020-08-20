@@ -125,7 +125,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 //    final ToggleGroup group = new ToggleGroup();
     // 必须static 类型
     public  static AppModel model = new AppModel();
-    public String ffmpegPath = getClass().getResource("/static/").toExternalForm();
+    public String ffmpegPath = "D:/";//getClass().getResource("/static/").toExternalForm();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -284,7 +284,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
         String append = filepath.substring(filepath.indexOf("."));
         extension.setText(append);
-        String outPathFile = outDir+"\\"+savename+append;
+        String outPathFile = outDir+"/"+savename+append;
 
         //嵌入主逻辑
         try {
@@ -498,6 +498,9 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
         }else if(mode.equals("Pdf")){
             description = new String[]{"Pdf File"};
             extension = new String[]{"*.pdf"};
+        }else if(mode.equals("Video")){
+            description = new String[]{"Video File"};
+            extension = new String[]{"*.mp4","*.avi"};
         }else{
             description = new String[]{"Microsoft Excel File", "CSV File"};
             extension =  new String[]{"*.xlsx","*.csv"};

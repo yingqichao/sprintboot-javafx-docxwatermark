@@ -5,6 +5,10 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 /**
  * 小图片的水印添加、提取---- 上海提供
@@ -16,6 +20,7 @@ public class VideoWatermark {
 
     static String get = "D:\\WaterMarkGetA" ;//提取水印、添加水印(2019-12-02)
     static String embed = "D:\\WaterMarkEmbA" ;//提取水印、添加水印(2019-12-02)
+    static String save = "D:\\extracted.txt" ;
 
 
     /**
@@ -50,23 +55,18 @@ public class VideoWatermark {
 //        int videoWatermark_embText_with_attack
 //                (String ffmpegFilePath, String waterTextPath, String videoPath, String videoEmbedSavefileName, int secretNum, int embStep, double intensity);
         int videoWatermark_embText_0513
-                (String ffmpegFilePath, String waterTextPath, String videoPath, String videoEmbedSavefileName, int secretNum, int embStep, double intensity);
+                (String ffmpegFilePath, String waterTextPath, String videoPath, String videoEmbedSavefileName, int secretNum, int embStep, double intensity,boolean direct);
 
     }
 
 
 
-    public static void embed(String coverPath,String water,String ffmpegFilePath,String outputPath) {
-        //---------SETTINGS----------
-//        MyExcelReader myExcelReader = new MyExcelReader("src/result.xlsx");
-//        Object[][] cells = myExcelReader.getSheetsRowAndCol();
-//        myExcelReader.writeCell(0,0,"Test");
-//        myExcelReader.save("");
-//        String str = "wang001";
+    public static void embed(String coverPath,String water,String ffmpegFilePath,String outputPath) {//filepath, watermark, ffmpegPath, outPathFile
+//        String str = "wangzhe";
 //
 //        String waterTextPath = "D:/water.txt";
 //        String ffmpegFilePath = "D:/";
-//        String coverPath = "D:/videos/" + str + ".mp4";
+//        String coverPath = "D:/videos/"+str+".mp4";
 //        String videoPath = "D:/cover.mp4";
         int secretNum = 1;
 //        String savePath = "D:/extracted.txt";
@@ -78,7 +78,7 @@ public class VideoWatermark {
 //
         System.out.println("Embed:");
         Embed.e.videoWatermark_embText_0513(
-                ffmpegFilePath, water, coverPath, outputPath, secretNum, embedStep, 30);
+                ffmpegFilePath, water, coverPath, outputPath, secretNum, embedStep, 30,true);
     }
 //////
     public static String extract(String extractFileName,String ffmpegFilePath) {
@@ -95,15 +95,31 @@ public class VideoWatermark {
            Get.g.videoWatermark_getText_0513(
                    ptrRef,ffmpegFilePath, extractFileName, secretNum,"",embedStep,-1,-1);
 //
-            final Pointer p = ptrRef.getValue();
+//            final Pointer p = ptrRef.getValue();
+//
+//            final String val = p.getString(0);
+//            System.out.println("-> Extracted: " + val);
+//
+//    // clean up memory allocated in C
+//            Get.g.clear(p);
+        String str = "";
+        try {
+            FileReader fr = new FileReader(save);
+            BufferedReader bf = new BufferedReader(fr);
 
-            final String val = p.getString(0);
-            System.out.println("-> Extracted: " + val);
+            // 读取第三行的内容
+            str = bf.readLine();
+            str = bf.readLine();
+            str = bf.readLine().split(":")[1];
+            bf.close();
+            fr.close();
+            return str;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
 
-    // clean up memory allocated in C
-            Get.g.clear(p);
 
-            return val;
 
     }
 
