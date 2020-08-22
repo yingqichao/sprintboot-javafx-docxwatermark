@@ -96,7 +96,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
     private String outDir = new String();
     private String savename = new String();
     //docx存放解压后文件夹的暂存路径
-    private static String desDir = "D://UnzipDocx";
+
 
     private String cssDefault = "-fx-border-color: black;\n" + "-fx-border-insets: 1;\n"
             + "-fx-border-width: 1;\n" + "-fx-border-style: dashed;\n";
@@ -125,7 +125,8 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 //    final ToggleGroup group = new ToggleGroup();
     // 必须static 类型
     public  static AppModel model = new AppModel();
-    public String ffmpegPath = "D:/";//getClass().getResource("/static/").toExternalForm();
+    public String ffmpegPath = getClass().getResource("/dependencies").toExternalForm().substring(6);//"D:/";
+    private String desDir = getClass().getResource("/static").toExternalForm().substring(6)+"/UnzipDocx";//"D://UnzipDocx";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -246,7 +247,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
         String append = filepath.substring(filepath.indexOf("."));
         extension.setText(append);
-        String outPathFile = outDir+"\\"+savename+append;
+        String outPathFile = outDir+savename+append;
         //嵌入主逻辑
         try {
             MainEmbed_excel.Embed(filepath,null,watermark,outPathFile);
@@ -284,11 +285,19 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 
         String append = filepath.substring(filepath.indexOf("."));
         extension.setText(append);
-        String outPathFile = outDir+"/"+savename+append;
+        String outPathFile = outDir+savename+append;
 
         //嵌入主逻辑
         try {
-            VideoWatermark.embed(filepath, watermark, ffmpegPath, outPathFile);
+
+            String embedDll = getClass().getResource("/dependencies/WaterMarkEmbA.dll").toExternalForm();
+            embedDll = embedDll.substring(6,embedDll.length()-4);
+            String getDll = getClass().getResource("/dependencies/WaterMarkGetA.dll").toExternalForm();
+            getDll = getDll.substring(6,getDll.length()-4);
+            String extractedPath = getClass().getResource("/dependencies/extracted.txt").toExternalForm().substring(6);
+            String tempPath = getClass().getResource("/static").toExternalForm().substring(6)+"/tempData";
+            VideoWatermark videoWatermark = new VideoWatermark(embedDll,getDll,extractedPath);
+            videoWatermark.embed(filepath, watermark, ffmpegPath, outPathFile,tempPath);
             //f_alert_informationDialog("嵌入已完成！","水印： " + watermark+" ，文件保存路径： " + outPathFile);
             sendText(actionEvent,outPathFile);
 
@@ -418,6 +427,7 @@ public class DocxController extends AbstractJavaFxApplicationSupport implements 
 //        System.out.println("Screenshot for "+fileAddress+" saves As: "+out);
         //关闭窗口
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+        Globe.f_alert_informationDialog("嵌入完成！","单击确定以返回");
     }
 
 //    public void confirm(ActionEvent actionEvent)

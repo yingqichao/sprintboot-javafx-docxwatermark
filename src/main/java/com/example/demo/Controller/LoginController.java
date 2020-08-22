@@ -86,7 +86,7 @@ public class LoginController extends AbstractJavaFxApplicationSupport implements
     private String outDir = new String();
     private String savename = new String();
     //docx存放解压后文件夹的暂存路径
-    private static String desDir = "D://UnzipDocx";
+    //private static String desDir = "D://UnzipDocx";
 
     // 必须static 类型
     public  static AppModel model = new AppModel();

@@ -22,6 +22,12 @@ public class VideoWatermark {
     static String embed = "D:\\WaterMarkEmbA" ;//提取水印、添加水印(2019-12-02)
     static String save = "D:\\extracted.txt" ;
 
+    public VideoWatermark(String embed,String get,String save){
+        this.embed = embed;
+        this.get = get;
+        this.save = save;
+    }
+
 
     /**
      * 添加、
@@ -55,13 +61,14 @@ public class VideoWatermark {
 //        int videoWatermark_embText_with_attack
 //                (String ffmpegFilePath, String waterTextPath, String videoPath, String videoEmbedSavefileName, int secretNum, int embStep, double intensity);
         int videoWatermark_embText_0513
-                (String ffmpegFilePath, String waterTextPath, String videoPath, String videoEmbedSavefileName, int secretNum, int embStep, double intensity,boolean direct);
+                (String ffmpegFilePath, String waterTextPath, String videoPath, String videoEmbedSavefileName, int secretNum,
+                 int embStep, double intensity,boolean direct, String tempPath);
 
     }
 
 
 
-    public static void embed(String coverPath,String water,String ffmpegFilePath,String outputPath) {//filepath, watermark, ffmpegPath, outPathFile
+    public static void embed(String coverPath,String water,String ffmpegFilePath,String outputPath, String tempPath) {//filepath, watermark, ffmpegPath, outPathFile
 //        String str = "wangzhe";
 //
 //        String waterTextPath = "D:/water.txt";
@@ -78,7 +85,7 @@ public class VideoWatermark {
 //
         System.out.println("Embed:");
         Embed.e.videoWatermark_embText_0513(
-                ffmpegFilePath, water, coverPath, outputPath, secretNum, embedStep, 30,true);
+                ffmpegFilePath, water, coverPath, outputPath, secretNum, embedStep, 30,true,tempPath);
     }
 //////
     public static String extract(String extractFileName,String ffmpegFilePath) {
@@ -115,7 +122,8 @@ public class VideoWatermark {
             fr.close();
             return str;
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("Does not contain watermark..!");
             return "";
         }
 
